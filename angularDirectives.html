@@ -24,9 +24,9 @@
   <body ng-controller="TodoCtrl">
       
     <div>
-        <dropdown options="pages1" result="value1"></dropdown> {{value1}}
+        <dropdown options="pages1" result="value1" keyReturn='no'></dropdown> {{value1}}
     <hr>
-        <dropdown options="pages2" result="value2"></dropdown> {{value2}}
+        <dropdown options="pages2" result="value2" keyReturn='yes'></dropdown> {{value2}}
     </div>
       
       
@@ -50,10 +50,8 @@
                 },
                 controller: function($scope) {
                     $scope.current = $scope.options[0];
-                    $scope.data = [];
-                    
                     $scope.data = $scope.options;
-
+                    
                     $scope.changeValue = function(number)
                     {
                         $scope.current = number;
