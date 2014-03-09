@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- jQuery -->
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <!-- angularjs -->
+    <script src="/lib/angularjs/angular.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="/lib/bootstrap2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/lib/bootstrap2/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-controller="TodoCtrl">
+      
+    <div>
+        <dropdown info="pages1" result="value"></dropdown> {{value1}}
+    <hr>
+        <dropdown info="pages2" result="value"></dropdown> {{value2}}
+    </div>
+    {{value}}
+      
+      
+      
+      
+      
+    <script type="text/javascript">
+    angular.module('app', [])
+        .controller('TodoCtrl', function($scope) {
+            $scope.pages1 = {options : [0,1,2,3,4], value: -1};
+            $scope.pages2 = {options : [5,6,7,8,9], value: -1};
+            $scope.value1 = 0;
+            $scope.value2 = 0;
+        })
+        .directive('dropdown', function() {
+            return {
+                restrict: 'E',
+                scope: {
+                    pageOptions: '=info',
+                    ret: '=result'
+                },
+                controller: function($scope) {
+                    $scope.pageOptions.value = $scope.pageOptions.options[0];
+                    $scope.changePaginator = function(number)
+                    {
+                        $scope.pageOptions.value = number;
+                        $scope.ret = number;
+                    };
+                },                
+                template:
+                    '<div class="btn-group">' +
+                    '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' +
+                    '{{pageOptions.value}} <span class="caret"></span>' +
+                    '</button>' +
+                    '<ul class="dropdown-menu" role="menu">' +
+                    '<li ng-repeat="item in pageOptions.options" ng-click="changePaginator(item);"><a href="#">{{item}}</a></li>' +
+                    '</ul>' +
+                    '</div>',
+            };
+        }
+    );        
+        
+    </script>
+    </body>
+</html>
