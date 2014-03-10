@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,15 +20,22 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <body ng-controller="TodoCtrl">
-      
+</head>
+<body ng-controller="TodoCtrl">
+    <style>
+        .wide1{
+            width: 100px;
+        }
+        .wide2{
+            min-width: 100px !important;
+        }
+    </style>
     <div>
-        <dropdown options="{{pages1}}" result="value1" keyisvalue='false'></dropdown> {{value1}}
+        <center><dropdown options="{{pages1}}" result="value1" keyisvalue='false'></dropdown> {{value1}}</center>
     <hr>
         <dropdown options="{{pages2}}" result="value2" keyisvalue='true'></dropdown> {{value2}}
     <hr>
-        <dropdown options="{{pages2}}" result="value3"></dropdown> {{value3}}
+        <dropdown options="{{pages2}}" result="value3" class="wide1" classdd="wide2"></dropdown> {{value3}}
     </div>
       
     <script type="text/javascript">
@@ -46,12 +53,18 @@
                 scope: {
                     options: '@',
                     result: '=',
-                    keyisvalue: '@'
+                    keyisvalue: '@',
+                    class: '@',
+                    classdd: '@',
+                    classddi: '@',
                 },
                 controller: function($scope) {
                     // convert text to boolean
                     $scope.keyisvalue = ($scope.keyisvalue !== undefined) && ($scope.keyisvalue.toLowerCase() === 'true');
                     $scope.options = JSON.parse($scope.options);
+                    $scope.class = ($scope.class !== undefined) ? $scope.class : "";
+                    $scope.classdd = ($scope.classdd !== undefined) ? $scope.classdd : "";
+                    $scope.classddi = ($scope.classddi !== undefined) ? $scope.classddi : "";
                     // prepare data for display
                     $scope.data = [];
                     for(var index in $scope.options)
@@ -72,11 +85,12 @@
                 },                
                 template:
                     '<div class="btn-group">' +
-                    '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' +
-                    '{{selected.text}}<span class="caret"></span>' +
                     '</button>' +
-                    '<ul class="dropdown-menu" role="menu">' +
-                    '<li ng-repeat="item in data" ng-click="changeValue(item.value);"><a href="#">{{item.text}}</a></li>' +
+                    '<button type="button" class="btn btn-default dropdown-toggle {{class}}" data-toggle="dropdown">' +
+                    '<div class="pull-left">{{selected.text}}</div><div class="pull-right"><span class="caret"></span></div>' +
+                    '</button>' +
+                    '<ul class="dropdown-menu {{classdd}}" role="menu">' +
+                    '<li ng-repeat="item in data" ng-click="changeValue(item.value);" class="{{classddi}}"><a href="#">{{item.text}}</a></li>' +
                     '</ul>' +
                     '</div>',
             };
@@ -84,5 +98,5 @@
     );        
         
     </script>
-    </body>
+</body>
 </html>
