@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +21,8 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body ng-controller="TodoCtrl">
+<body>
+<div ng-app="app"><div ng-controller="TodoCtrl">
     <style>
         .wide1{
             width: 100px;
@@ -37,12 +38,12 @@
     <hr>
         <dropdown options="{{pages2}}" result="value3" class="wide1" classdd="wide2"></dropdown> {{value3}}
     </div>
-      
+</div></div>
     <script type="text/javascript">
     angular.module('app', [])
         .controller('TodoCtrl', function($scope) {
             $scope.pages1 = [0,1,2,3,4];
-            $scope.pages2 = [5,6,7,8,9];
+            $scope.pages2 = {v1:5,v2:6,v3:7,v4:8,v5:9};
             $scope.value1 = 0;
             $scope.value2 = 0;
             $scope.value3 = 0;
