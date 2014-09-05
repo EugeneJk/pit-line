@@ -44,7 +44,7 @@
                                     {{team.name}} <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li ng-repeat="driver in team.drivers" ng-click="selectDriver(team.name, driver.name);" class="ng-class:{'disabled': driver.locked && selectedField != 'pole-position'}">
+                                    <li ng-repeat="driver in team.drivers" ng-click="selectDriver(driver.name);" class="ng-class:{'disabled': driver.locked && selectedField != 'pole-position'}">
                                         <a href="#" class="ng-class:{'disabled-link': driver.locked && selectedField != 'pole-position'}">{{driver.name}}</a>
                                     </li>
                                 </ul>
@@ -78,7 +78,7 @@
                     'tenth-place':'',
                 };
                 $scope.teams = [
-                    {name: 'Red Bull', drivers: [{name:'Себастьян Феттель',locked:true},{name:'Даниэль Риккардо',locked:false}]},
+                    {name: 'Red Bull', drivers: [{name:'Себастьян Феттель',locked:false},{name:'Даниэль Риккардо',locked:false}]},
                     {name: 'Mercedes', drivers: [{name:'Льюис Хэмилтон',locked:false},{name:'Нико Росберг',locked:false}]},
                     {name: 'Ferrari', drivers: [{name:'Фернандо Алонсо',locked:false},{name:'Кими Райкконен',locked:false}]},
                     {name: 'Lotus', drivers: [{name:'Роман Грожан',locked:false},{name:'Пастор Мальдонадо',locked:false}]},
@@ -102,16 +102,42 @@
                 $scope.selectedField = $scope.inputFields[0].id;
 
 
-                $scope.selectDriver = function(team, dirver)
+                $scope.selectDriver = function(driver)
                 {
-                    console.log(team, dirver, $scope.selectedField);
-                    $scope.dataFields[$scope.selectedField] = dirver;
+                    var indexes = findIndexes(driver);
+                    var driverIndex = indexes.dIndex;
+                    var teamIndex = indexes.tIndex;
+                    
+                    if(driverIndex !== -1 && teamIndex !== -1){
+                        if($scope.dataFields[$scope.selectedField] !== ''){
+                            indexes = findIndexes($scope.dataFields[$scope.selectedField]);
+                            console.log(indexes);
+                            $scope.teams[indexes.tIndex].drivers[indexes.dIndex].locked = false;
+                        }
+                        $scope.teams[teamIndex].drivers[driverIndex].locked = true;
+                        $scope.dataFields[$scope.selectedField] = driver;
+                    }else{
+                        
+                    }
                 };
                 $scope.changeRadio = function(selected)
                 {
                     $scope.selectedField = selected;
                 };
 
+                var findIndexes = function(driver){
+                    var teamIndex = -1, driverIndex = -1;
+                    for(var i in $scope.teams){
+                        for(var j in $scope.teams[i].drivers){
+                            if($scope.teams[i].drivers[j].name === driver){
+                                teamIndex = i;
+                                driverIndex = j;
+                                break;
+                            }
+                        }
+                    }
+                    return {tIndex: teamIndex, dIndex: driverIndex};
+                };
             };
         </script>
     </body>
