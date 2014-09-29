@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="app">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,26 +38,17 @@
             <tbody>
                 <tr>
                     <td>
-                        <div class="btn-group-vertical">
-                            <div class="btn-group" ng-repeat="team in teams">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    {{team.name}} <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li ng-repeat="driver in team.drivers" ng-click="selectDriver(driver.name);" class="ng-class:{'disabled': driver.locked && selectedField != 'pole-position'}">
-                                        <a href="#" class="ng-class:{'disabled-link': driver.locked && selectedField != 'pole-position'}">{{driver.name}}</a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="input-group" ng-repeat="item in inputFields">
+                            <span class="input-group-addon">
+                                {{item.name}}
+                            </span>
+                            <input type="text" class="form-control" ng-model='dataFields[item.id]' ng-click="showDrivers(item.id);" ng-enter="selectDriver(item.id)">
                         </div>
                     </td>
                     <td>
-                        <div class="input-group" ng-repeat="item in inputFields">
-                            <span class="input-group-addon">
-                                <input type="radio" id="{{item.id}}" name="selectedField" ng-model="$parent.selectedField" value="{{item.id}}">
-                                <label for="{{item.id}}" class="radio-label">{{item.name}}</label>
-                            </span>
-                            <input type="text" class="form-control" ng-model='dataFields[item.id]' ng-click="changeRadio(item.id);">
+                        <div ng-repeat="team in currentTeams | filter:dataFields[selectedItem]">
+                            {{team.name}}
+                            <span ng-repeat="driver in team.drivers | filter:dataFields[selectedItem]">{{driver}}</span>
                         </div>
                     </td>
                 </tr>
@@ -67,8 +58,9 @@
         
         
         <script type="text/javascript">
-            function TodoCtrl($scope) {
-                $scope.dataFields = {
+        angular.module('app', [])
+        .controller('TodoCtrl', function($scope) {
+            $scope.dataFields = {
                     'pole-position':'',
                     'first-place':'',
                     'second-place':'',
@@ -78,18 +70,19 @@
                     'tenth-place':'',
                 };
                 $scope.teams = [
-                    {name: 'Red Bull', drivers: [{name:'Себастьян Феттель',locked:false},{name:'Даниэль Риккардо',locked:false}]},
-                    {name: 'Mercedes', drivers: [{name:'Льюис Хэмилтон',locked:false},{name:'Нико Росберг',locked:false}]},
-                    {name: 'Ferrari', drivers: [{name:'Фернандо Алонсо',locked:false},{name:'Кими Райкконен',locked:false}]},
-                    {name: 'Lotus', drivers: [{name:'Роман Грожан',locked:false},{name:'Пастор Мальдонадо',locked:false}]},
-                    {name: 'McLaren', drivers: [{name:'Дженсон Баттон',locked:false},{name:'Кевин Магнуссен',locked:false}]},
-                    {name: 'Force India', drivers: [{name:'Нико Хюлкенберг',locked:false},{name:' Серхио Перес',locked:false}]},
-                    {name: 'Sauber', drivers: [{name:'Адриан Сутил',locked:false},{name:'Эстебан Гутьеррес',locked:false}]},
-                    {name: 'Toro Rosso', drivers: [{name:'Жан-Эрик Вернь',locked:false},{name:'Даниил Квят',locked:false}]},
-                    {name: 'Williams', drivers: [{name:'Фелипе Масса',locked:false},{name:'Валттери Боттас',locked:false}]},
-                    {name: 'Marussia', drivers: [{name:'Жюль Бьянки',locked:false},{name:'Макс Чилтон',locked:false}]},
-                    {name: 'Caterham', drivers: [{name:'Камуи Кобаяши',locked:false},{name:'Маркус Эриксон',locked:false}]},
+                    {name: 'Red Bull', drivers: ['Себастьян Феттель','Даниэль Риккардо']},
+                    {name: 'Mercedes', drivers: ['Льюис Хэмилтон','Нико Росберг']},
+                    {name: 'Ferrari', drivers: ['Фернандо Алонсо','Кими Райкконен']},
+                    {name: 'Lotus', drivers: ['Роман Грожан','Пастор Мальдонадо']},
+                    {name: 'McLaren', drivers: ['Дженсон Баттон','Кевин Магнуссен']},
+                    {name: 'Force India', drivers: ['Нико Хюлкенберг',' Серхио Перес']},
+                    {name: 'Sauber', drivers: ['Адриан Сутил','Эстебан Гутьеррес']},
+                    {name: 'Toro Rosso', drivers: ['Жан-Эрик Вернь','Даниил Квят']},
+                    {name: 'Williams', drivers: ['Фелипе Масса','Валттери Боттас']},
+                    {name: 'Marussia', drivers: ['Жюль Бьянки','Макс Чилтон']},
+                    {name: 'Caterham', drivers: ['Камуи Кобаяши','Маркус Эриксон']},
                 ];
+                $scope.removableTeams = angular.copy($scope.teams);
                 $scope.inputFields = [
                     {id:'pole-position', name: 'Поул'},
                     {id:'first-place', name: '1'},
@@ -99,46 +92,37 @@
                     {id:'fifth-place', name: '5'},
                     {id:'tenth-place', name: '10'},
                 ];
-                $scope.selectedField = $scope.inputFields[0].id;
-
-
-                $scope.selectDriver = function(driver)
+                $scope.selectedItem = null;
+                
+                $scope.currentTeams = {};
+                
+                $scope.showDrivers = function(selected)
                 {
-                    var indexes = findIndexes(driver);
-                    var driverIndex = indexes.dIndex;
-                    var teamIndex = indexes.tIndex;
-                    
-                    if(driverIndex !== -1 && teamIndex !== -1){
-                        if($scope.dataFields[$scope.selectedField] !== ''){
-                            indexes = findIndexes($scope.dataFields[$scope.selectedField]);
-                            console.log(indexes);
-                            $scope.teams[indexes.tIndex].drivers[indexes.dIndex].locked = false;
-                        }
-                        $scope.teams[teamIndex].drivers[driverIndex].locked = true;
-                        $scope.dataFields[$scope.selectedField] = driver;
+                    $scope.selectedItem = selected;
+                    if($scope.selectedItem === 'pole-position'){
+                        $scope.currentTeams = $scope.teams;
                     }else{
-                        
+                        $scope.currentTeams = $scope.removableTeams;
                     }
                 };
-                $scope.changeRadio = function(selected)
-                {
-                    $scope.selectedField = selected;
-                };
+                
+                $scope.selectDriver = function(selected){
+                    console.log(selected);
+                }
+                
+            }).directive('ngEnter', function () {
+                return function (scope, element, attrs) {
+                    element.bind("keydown keypress", function (event) {
+                        if(event.which === 13) {
+                            scope.$apply(function (){
+                                scope.$eval(attrs.ngEnter);
+                            });
 
-                var findIndexes = function(driver){
-                    var teamIndex = -1, driverIndex = -1;
-                    for(var i in $scope.teams){
-                        for(var j in $scope.teams[i].drivers){
-                            if($scope.teams[i].drivers[j].name === driver){
-                                teamIndex = i;
-                                driverIndex = j;
-                                break;
-                            }
+                            event.preventDefault();
                         }
-                    }
-                    return {tIndex: teamIndex, dIndex: driverIndex};
+                    });
                 };
-            };
+            });
         </script>
     </body>
 </html>
