@@ -22,35 +22,59 @@
         <![endif]-->
         
         <style>
-            .disabled-link {
-               pointer-events: none;
-               cursor: default;
+            .field-selected-label{
+                background-color:  #5bc0de !important;
+                color: white !important;
+            }
+            .field-completed-label{
+                background-color:  #5cb85c !important;
+                color: white !important;
+            }
+            .field-clear-label{
+                background-color:  white;
+                color: black;
             }
             .field-label{
                 margin-left: 10px;
                 margin-bottom: 0px !important;
                 width: 60px;
             }
+            .driver-button{
+                margin-left: 10px;
+//                margin-bottom: 0px !important;
+                width: 250px;
+                text-align: left;
+            }
+            .drivers-panel{
+                width: 300px;
+                height: 238px;
+                overflow: auto;
+            }
         </style>
     </head>
     <body ng-controller="TodoCtrl">
-        <table>
+        <table style="margin-left: 10px;margin-top: 10px;">
             <tbody>
                 <tr>
                     <td>
                         <div class="input-group" ng-repeat="item in inputFields">
-                            <span class="input-group-addon field-label">
+                            <span class="input-group-addon field-label" ng-class="{'field-completed-label': dataFields[item.id].isset ,'field-selected-label': currentSelected === item.id}">
                                 {{item.name}}
                             </span>
-                            <input type="text" class="form-control" ng-model='dataFields[item.id].name' ng-readonly="dataFields[item.id].isset" ng-change='filterItems(dataFields[item.id].name)' ng-focus="showDrivers(item.id);" ng-enter="selectDriver(item.id)">
-                            <a class="btn input-group-addon field-label" ng-click="clearSelection(item.id)">
+                            <input type="text" class="form-control" ng-class="{'field-completed-label': dataFields[item.id].isset }" ng-model='dataFields[item.id].name' ng-readonly="dataFields[item.id].isset" ng-change='filterItems(dataFields[item.id].name)' ng-focus="showDrivers(item.id);" ng-enter="selectDriver(item.id)">
+                            <a class="btn input-group-addon field-label field-clear-label" ng-click="clearSelection(item.id)">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
+                            
                         </div>
                     </td>
                     <td>
-                        <div ng-repeat="team in filteredItems">
-                            {{team.display}}
+                        <div class="drivers-panel">
+                            <div ng-repeat="team in filteredItems">
+                                <button type="button" class="btn btn-default driver-button" ng-click="applyDriver(team.driver)">
+                                    {{team.display}}
+                                </button>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -110,9 +134,10 @@
                 ];
                 
                 $scope.currentDrivers = null;
-                
+                $scope.currentSelected = null;
                 $scope.showDrivers = function(selected)
                 {
+                    $scope.currentSelected = selected;
                     if(selected === 'pole-position'){
                         $scope.currentDrivers = $scope.driversQual;
                     }else{
@@ -144,6 +169,7 @@
                 };
                 
                 $scope.clearSelection = function(selected){
+                    $scope.currentSelected = selected;
                     if(selected === 'pole-position'){
                         $scope.driversQual = angular.copy($scope.driversBase);
                         $scope.dataFields[selected].name = '';
@@ -162,10 +188,18 @@
                                 }
                             }
                         }
-                        $scope.filteredItems = [];
+                        //$scope.filteredItems = [];
                     }
+                    $scope.filterItems($scope.currentSelected);
+                    $scope.showDrivers($scope.currentSelected);
                 };
                 
+                $scope.applyDriver= function(name){
+                    $scope.dataFields[$scope.currentSelected].name = name;
+                    $scope.filterItems(name);
+                    $scope.selectDriver($scope.currentSelected);
+                    
+                }
             }).directive('ngEnter', function () {
                 return function (scope, element, attrs) {
                     element.bind("keydown keypress", function (event) {
