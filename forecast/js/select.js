@@ -1,5 +1,5 @@
 angular.module('forecast', ['OnEnterEvent'])
-.controller('ForecastController', function($scope, $filter) {
+.controller('ForecastController', function($scope, $filter, $http, $timeout) {
     var teamsBase = [
         {name: 'Red Bull', drivers: ['Себастьян Феттель','Даниэль Риккардо']},
         {name: 'Mercedes', drivers: ['Льюис Хэмилтон','Нико Росберг']},
@@ -102,7 +102,6 @@ angular.module('forecast', ['OnEnterEvent'])
                     }
                 }
             }
-            //$scope.filteredItems = [];
         }
         $scope.filterItems($scope.currentSelected);
         $scope.showDrivers($scope.currentSelected);
@@ -113,5 +112,32 @@ angular.module('forecast', ['OnEnterEvent'])
         $scope.filterItems(name);
         $scope.selectDriver($scope.currentSelected);
 
-    }
+    };
+    
+    $scope.showAlert = false;
+    $scope.showSuccess = false;
+    $scope.submitData = function(){
+        $scope.showAlert = false;
+        for(var field in $scope.dataFields){
+            if($scope.dataFields[field].isset === false){
+                $scope.showAlert = true;
+                $timeout(hideAlert, 1000);
+            }
+        }
+        if(!$scope.showAlert){
+            var data = $scope.dataFields;
+            $http.post('/forecast/select.php', data,
+{
+    headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'}
+}
+            )/*.success(successCallback)*/;
+        }
+    };
+    
+    var hideAlert = function(){
+        $scope.showAlert = false;
+    };
+    var hideSuccess = function(){
+        $scope.showSuccess = false;
+    };
 });
