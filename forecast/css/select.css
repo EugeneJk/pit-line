@@ -1,0 +1,27 @@
+.field-selected-label{
+    background-color:  #5bc0de !important;
+    color: white !important;
+}
+.field-completed-label{
+    background-color:  #5cb85c !important;
+    color: white !important;
+}
+.field-clear-label{
+    background-color:  white;
+    color: black;
+}
+.field-label{
+    margin-left: 10px;
+    margin-bottom: 0px !important;
+    width: 60px;
+}
+.driver-button{
+    margin-left: 10px;
+    width: 250px;
+    text-align: left;
+}
+.drivers-panel{
+    width: 300px;
+    height: 238px;
+    overflow: auto;
+}
