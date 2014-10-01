@@ -121,15 +121,15 @@ angular.module('forecast', ['OnEnterEvent'])
         for(var field in $scope.dataFields){
             if($scope.dataFields[field].isset === false){
                 $scope.showAlert = true;
-                $timeout(hideAlert, 1000);
+                $timeout(hideAlert, 1500);
             }
         }
         if(!$scope.showAlert){
             var data = $scope.dataFields;
-            $http.post('/forecast/select.php', data,
-{
-    headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'}
-}
+            $http.post('/forecast/action.php', data,
+                {
+                    headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'}
+                }
             )/*.success(successCallback)*/;
         }
     };
