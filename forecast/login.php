@@ -1,3 +1,11 @@
+<?php
+    if(!isset($_SESSION)){
+        session_start();
+    }
+    if(isset($_SESSION['forecast']['is_logged']) && $_SESSION['forecast']['is_logged']){
+        header('Location: select.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
     <head>

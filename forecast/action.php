@@ -1,5 +1,9 @@
 <?php
     $input = json_decode(file_get_contents("php://input"),true);
+    
+    if(!isset($_SESSION)){
+        session_start();
+    }
     $result = array('success' => false, 'error' => 'unknown_action');
     if(!isset($_SESSION['forecast'])){
         $_SESSION['forecast'] = array(
@@ -7,7 +11,7 @@
             'is_logged' => false,
         );
     }
-    
+
     $action = (isset($input['action'])) ? $input['action'] : null;
     $data = (isset($input['data'])) ? $input['data'] : null;
     

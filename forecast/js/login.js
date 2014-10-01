@@ -39,7 +39,7 @@ angular.module('forecast', ['OnEnterEvent'])
             $timeout(hideIncorrectLogin, 2500);
         } else {
             $scope.showSuccess = true;
-            $window.location.href = 'select.html';
+            //$window.location.href = 'select.php';
         }
     };
     
