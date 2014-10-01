@@ -1,5 +1,8 @@
 angular.module('forecast', ['OnEnterEvent'])
 .controller('ForecastController', function($scope, $filter, $http, $timeout) {
+    $scope.init = function(initFunction){
+        $scope.data = eval(initFunction)();
+    };
     var teamsBase = [
         {name: 'Red Bull', drivers: ['Себастьян Феттель','Даниэль Риккардо']},
         {name: 'Mercedes', drivers: ['Льюис Хэмилтон','Нико Росберг']},

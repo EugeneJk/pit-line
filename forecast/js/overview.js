@@ -6,6 +6,6 @@ angular.module('forecast', [])
     };
 
     $scope.goToSelect = function(year,stage){
-        $window.location.href = 'select.php?year=' + year + '&stage' + stage;
+        $window.location.href = 'select.php?year=' + year + '&stage=' + stage;
     };
 });

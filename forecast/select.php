@@ -5,6 +5,12 @@
     if(!isset($_SESSION['forecast']['is_logged']) || !$_SESSION['forecast']['is_logged']){
         header('Location: login.php');
     }
+    $mongo = new MongoClient("mongodb://localhost");
+    $year = isset($_GET['year'])? intval($_GET['year']) : null;
+    $stage = isset($_GET['year'])? intval($_GET['stage']) : null;
+    $filter = array('year' => $year);
+    $season = $mongo->forecast->results->findOne($filter);
+
 ?>
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
@@ -34,10 +40,10 @@
         <script src="/forecast/js/select.js"></script>
         <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
-    <body ng-controller="ForecastController">
+    <body ng-controller="ForecastController" ng-init="init('inputData')">
         <div class="panel panel-primary panel-custom">
             <div class="panel-heading">
-                <h3 class="panel-title">Прогноз на Гран-При ХХХХХХХХ</h3>
+                <h3 class="panel-title">Прогноз на {{data.name}}</h3>
             </div>
             <div class="panel-body">
                 <div class="alert alert-danger" role="alert" ng-show="showAlert">
@@ -82,5 +88,14 @@
                 <center><button class="btn btn-primary" ng-click="submitData();">Отправить</button></center>
             </div>
         </div>
+        <script type="text/javascript">
+            function inputData(){
+                return {
+                    year: <?php echo $year;?>,
+                    stage: <?php echo $stage?>,
+                    name: '<?php echo $season['stages'][$stage-1]['name']; ?>',
+                };
+            };
+        </script>
     </body>
 </html>

@@ -4,7 +4,7 @@
     }
     if(!isset($_SESSION['forecast']['is_logged']) || !$_SESSION['forecast']['is_logged']){
         header('Location: login.php');
-    }
+    } 
     $mongo = new MongoClient("mongodb://localhost");
     $filter = array('active' => true);
     $season = $mongo->forecast->results->findOne($filter);
@@ -58,7 +58,7 @@
         {{data}}
         <script type="text/javascript">
             function inputData(){
-                return <?php echo json_encode($season);?>
+                return <?php echo json_encode($season);?>;
             };
         </script>
     </body>
