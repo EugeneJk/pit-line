@@ -15,12 +15,11 @@
     $action = (isset($input['action'])) ? $input['action'] : null;
     $data = (isset($input['data'])) ? $input['data'] : null;
     
+    $mongo = new MongoClient("mongodb://localhost");
     switch($action){
         case 'login':
-            $mongo = new MongoClient("mongodb://localhost");
             $filter = array('username' => $data['username'], 'password' => $data['password']);
-            $cursor = $mongo->forecast->users->find($filter);
-            $user = $cursor->getNext();
+            $user = $mongo->forecast->users->findOne($filter);
             if($user){
                 $_SESSION['forecast'] = array(
                     'user' => $user,
@@ -34,6 +33,16 @@
             }
             break;
         case 'make_forecast':
+            $year = (isset($input['year'])) ? intval($input['year']) : null;
+            $stageNumber = (isset($input['stage_number'])) ? intval($input['stage_number']) : null;
+            $filter = array('year' => $year);
+            $season = $mongo->forecast->results->findOne($filter);
+            if($season){
+                $result['success'] = true;
+                $result['error'] = '';
+            } else {
+                $result['error'] = 'wrong_submit';
+            }
             break;
     }
     

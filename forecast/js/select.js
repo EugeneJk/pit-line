@@ -1,21 +1,17 @@
 angular.module('forecast', ['OnEnterEvent'])
 .controller('ForecastController', function($scope, $filter, $http, $timeout) {
+    var teamsBase = [];
+    $scope.driversBase = null;
+    $scope.driversRace = null;
+    $scope.driversQual = null;
     $scope.init = function(initFunction){
         $scope.data = eval(initFunction)();
+        
+        teamsBase = $scope.data.teams;
+        $scope.driversBase = populateTeams();
+        $scope.driversRace = angular.copy($scope.driversBase);
+        $scope.driversQual = angular.copy($scope.driversBase);
     };
-    var teamsBase = [
-        {name: 'Red Bull', drivers: ['Себастьян Феттель','Даниэль Риккардо']},
-        {name: 'Mercedes', drivers: ['Льюис Хэмилтон','Нико Росберг']},
-        {name: 'Ferrari', drivers: ['Фернандо Алонсо','Кими Райкконен']},
-        {name: 'Lotus', drivers: ['Роман Грожан','Пастор Мальдонадо']},
-        {name: 'McLaren', drivers: ['Дженсон Баттон','Кевин Магнуссен']},
-        {name: 'Force India', drivers: ['Нико Хюлкенберг',' Серхио Перес']},
-        {name: 'Sauber', drivers: ['Адриан Сутил','Эстебан Гутьеррес']},
-        {name: 'Toro Rosso', drivers: ['Жан-Эрик Вернь','Даниил Квят']},
-        {name: 'Williams', drivers: ['Фелипе Масса','Валттери Боттас']},
-        {name: 'Marussia', drivers: ['Жюль Бьянки','Макс Чилтон']},
-        {name: 'Caterham', drivers: ['Камуи Кобаяши','Маркус Эриксон']},
-    ];
 
     var populateTeams = function(){
         var drivers = []
@@ -26,10 +22,6 @@ angular.module('forecast', ['OnEnterEvent'])
         }
         return drivers;
     };
-
-    $scope.driversBase = populateTeams();
-    $scope.driversRace = angular.copy($scope.driversBase);
-    $scope.driversQual = angular.copy($scope.driversBase);
 
     $scope.dataFields = {
         'pole-position':{name:'', isset:false},
@@ -128,7 +120,12 @@ angular.module('forecast', ['OnEnterEvent'])
             }
         }
         if(!$scope.showAlert){
-            var data = $scope.dataFields;
+            var data = {
+                action: 'make_forecast',
+                forecast: $scope.dataFields,
+                year: $scope.data.year,
+                stage_number: $scope.data.stage
+            };
             $http.post('/forecast/action.php', data,
                 {
                     headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'}
