@@ -34,7 +34,7 @@
         <![endif]-->
         
         <link href="/forecast/css/base.css" rel="stylesheet">
-        <l!ink href="/forecast/css/select.css" rel="stylesheet">
+        <link href="/forecast/css/select.css" rel="stylesheet">
         <script src="/forecast/js/overview.js"></script>
     </head>
     <body ng-controller="OverviewController" ng-init="init('inputData')">
@@ -48,10 +48,15 @@
                         {{stage.number}} - {{stage.name}}
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-eye-open"></span>
+                    <button type="button" class="btn btn-default" ng-class="{'btn-primary': isFillResults}">
+                        <span class="glyphicon glyphicon-eye-open" ng-class="{'glyphicon-import': isFillResults}"></span>
                     </button>
                 </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-default" ng-class="{'btn-primary': isFillResults}" ng-click="switchInput();">Ввод результатов</button>
+                <button type="button" class="btn btn-default">Сезоны</button>
+                <button type="button" class="btn btn-default">Пользователи</button>
             </div>
         </div>
         

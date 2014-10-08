@@ -93,7 +93,7 @@
                 return {
                     year: <?php echo $year;?>,
                     stage: <?php echo $stage?>,
-                    name: '<?php echo $season['stages'][$stage-1]['name']; ?>',
+                    name: '<?php echo $season['stages'][$stage]['name']; ?>',
                     teams: <?php echo json_encode($season['teams']); ?>,
                 };
             };

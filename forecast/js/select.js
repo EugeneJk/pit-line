@@ -1,5 +1,5 @@
 angular.module('forecast', ['OnEnterEvent'])
-.controller('ForecastController', function($scope, $filter, $http, $timeout) {
+.controller('ForecastController', function($scope, $filter, $http, $timeout, $window) {
     var teamsBase = [];
     $scope.driversBase = null;
     $scope.driversRace = null;
@@ -130,7 +130,7 @@ angular.module('forecast', ['OnEnterEvent'])
                 {
                     headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'}
                 }
-            )/*.success(successCallback)*/;
+            ).success(successSubmit);
         }
     };
     
@@ -139,5 +139,10 @@ angular.module('forecast', ['OnEnterEvent'])
     };
     var hideSuccess = function(){
         $scope.showSuccess = false;
+    };
+    
+    var successSubmit = function(data){
+        console.log(data);
+        $window.location.href = 'overview.php';
     };
 });

@@ -35,8 +35,11 @@
         case 'make_forecast':
             $year = (isset($input['year'])) ? intval($input['year']) : null;
             $stageNumber = (isset($input['stage_number'])) ? intval($input['stage_number']) : null;
+            $user = $_SESSION['forecast']['user']['username'];
             $filter = array('year' => $year);
             $season = $mongo->forecast->results->findOne($filter);
+            $season['stages'][$stageNumber]['forecasts'][$user] = $input['forecast'];
+            $mongo->forecast->results->update($filter,$season);
             if($season){
                 $result['success'] = true;
                 $result['error'] = '';
