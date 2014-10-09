@@ -7,8 +7,19 @@
     } 
     $mongo = new MongoClient("mongodb://localhost");
     $filter = array('active' => true);
-    $season = $mongo->forecast->results->findOne($filter);
-    
+    $fields = array(
+        'year' => true,
+        'active' => true,
+        'teams' => true,
+        'stages' => true,
+    );
+    $seasons = $mongo->forecast->results->find()->fields($fields);
+    $currectSeason = $seasons->getNext();
+    $allSeasons = array();
+    while($currectSeason){
+        $allSeasons[] = $currectSeason;
+        $currectSeason = $seasons->getNext();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
@@ -40,30 +51,21 @@
     <body ng-controller="OverviewController" ng-init="init('inputData')">
         <div class="panel panel-primary panel-custom">
             <div class="panel-heading">
-                <h3 class="panel-title">Сезон {{data.year}}</h3>
+                <h3 class="panel-title">Сезоны</h3>
             </div>
             <div class="panel-body">
-                <div class="btn-group" ng-repeat="stage in data.stages">
-                    <button type="button" class="btn btn-default" ng-click="goToSelect(data.year,stage.number)">
-                        {{stage.number}} - {{stage.name}}
+                <div class="input-group" >
+                    <button ng-repeat="season in data" type="button" class="btn btn-default">
+                        {{season.year}}
                         <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="button" class="btn btn-default" ng-class="{'btn-primary': isFillResults}">
-                        <span class="glyphicon glyphicon-eye-open" ng-class="{'glyphicon-import': isFillResults}"></span>
                     </button>
                 </div>
             </div>
-            <div class="panel-footer">
-                <button type="button" class="btn btn-default" ng-class="{'btn-primary': isFillResults}" ng-click="switchInput();">Ввод результатов</button>
-                <button type="button" class="btn btn-default" ng-click="goToSeasons();">Сезоны</button>
-                <button type="button" class="btn btn-default">Пользователи</button>
-            </div>
         </div>
-        
         {{data}}
         <script type="text/javascript">
             function inputData(){
-                return <?php echo json_encode($season);?>;
+                return <?php echo json_encode($allSeasons);?>;
             };
         </script>
     </body>

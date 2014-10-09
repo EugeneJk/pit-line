@@ -17,4 +17,8 @@ angular.module('forecast', [])
     $scope.goToFillResults = function(year,stage){
         $window.location.href = 'fill.php?year=' + year + '&stage=' + stage;
     };
+    
+    $scope.goToSeasons = function(year,stage){
+        $window.location.href = 'seasons.php';
+    };
 });
