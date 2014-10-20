@@ -1,4 +1,4 @@
-<?php
+    <?php
     if(!isset($_SESSION)){
         session_start();
     }
@@ -9,9 +9,7 @@
     $filter = array('active' => true);
     $fields = array(
         'year' => true,
-        'active' => true,
-        'teams' => true,
-        'stages' => true,
+        '_id' => false,
     );
     $seasons = $mongo->forecast->results->find()->fields($fields);
     $currectSeason = $seasons->getNext();
@@ -45,10 +43,10 @@
         <![endif]-->
         
         <link href="/forecast/css/base.css" rel="stylesheet">
-        <link href="/forecast/css/select.css" rel="stylesheet">
-        <script src="/forecast/js/overview.js"></script>
+        <link href="/forecast/css/seasons.css" rel="stylesheet">
+        <script src="/forecast/js/seasons.js"></script>
     </head>
-    <body ng-controller="OverviewController" ng-init="init('inputData')">
+    <body ng-controller="SeasonController" ng-init="init('inputData')">
         <div class="panel panel-primary panel-custom">
             <div class="panel-heading">
                 <h3 class="panel-title">Сезоны</h3>
@@ -61,8 +59,12 @@
                     </button>
                 </div>
             </div>
+            <div class="panel-footer tool-bar">
+                <button type="button" class="btn btn-default" ng-click="addNewSeason();">
+                    Новый <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
         </div>
-        {{data}}
         <script type="text/javascript">
             function inputData(){
                 return <?php echo json_encode($allSeasons);?>;
