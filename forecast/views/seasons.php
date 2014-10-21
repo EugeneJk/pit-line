@@ -11,12 +11,21 @@
         'year' => true,
         '_id' => false,
     );
-    $seasons = $mongo->forecast->results->find()->fields($fields);
-    $currectSeason = $seasons->getNext();
+
     $allSeasons = array();
-    while($currectSeason){
-        $allSeasons[] = $currectSeason;
-        $currectSeason = $seasons->getNext();
+    $cursor = $mongo->forecast->results->find()->fields($fields);
+    $currentElement = $cursor->getNext();
+    while($currentElement){
+        $allSeasons[] = $currentElement;
+        $currentElement = $cursor->getNext();
+    }
+    
+    $allTeams = array();
+    $cursor = $mongo->forecast->reference->find(array('type' => 'team'));
+    $currentElement = $cursor->getNext();
+    while($currentElement){
+        $allTeams[] = $currentElement;
+        $currentElement = $cursor->getNext();
     }
 ?>
 <!DOCTYPE html>
@@ -47,6 +56,74 @@
         <script src="/forecast/js/seasons.js"></script>
     </head>
     <body ng-controller="SeasonController" ng-init="init('inputData')">
+        <div class="modal fade" id="modal-popup">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Новый сезон</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs" role="tablist" id="options-tabs">
+                            <li class="active"><a href="#year" id='t1' ng-click="tabClick(1)">Год</a></li>
+                            <li><a href="#stages" id='t2' ng-click="tabClick(2)">Этапы</a></li>
+                            <li><a href="#teams" id='t3' ng-click="tabClick(3)">Команды</a></li>
+                            <li><a href="#rules" id='t4' ng-click="tabClick(4)">Правила</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active option-tab" id="year">
+                                <input type="text" class="form-control" placeholder="Год" ng-model="selectedSeason._id">
+                            </div>
+                            <div class="tab-pane option-tab" id="stages">
+                                <div class="input-group" ng-repeat="(key, value) in selectedSeason.stages track by $index">
+                                    <input type="text" class="form-control" placeholder="Название этапа" ng-model="selectedSeason.stages[key]">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" ng-click="removeStage(key)">
+                                            <span class="glyphicon glyphicon-minus"></span>
+                                        </button>
+                                    </span>
+                                </div>                                
+                                <button type="button" class="btn btn-default" ng-click="addNewStage();">
+                                    Добавить <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </div>
+                            <div class="tab-pane option-tab" id="teams">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <ul class="list-group">
+                                              <li class="list-group-item">
+                                                <input type="text" class="form-control" placeholder="Название команды" ng-model="selectedSeason.stages[key]">
+                                              </li>
+                                              <li class="list-group-item">
+                                                  <span class="label label-default">Default</span>
+                                                  <span class="label label-default">Default</span>
+                                              </li>
+                                            </ul>                                            
+                                        </div>
+                                        <button type="button" class="btn btn-default" ng-click="addNewTeam();">
+                                            Добавить <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <button ng-repeat="team in teams" type="button" class="btn btn-default">
+                                            {{team._id}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane option-tab" id="rules">
+                                Правила
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="saveNewSeason()">Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->        
         <div class="panel panel-primary panel-custom">
             <div class="panel-heading">
                 <h3 class="panel-title">Сезоны</h3>
@@ -67,7 +144,10 @@
         </div>
         <script type="text/javascript">
             function inputData(){
-                return <?php echo json_encode($allSeasons);?>;
+                return {
+                    data: <?php echo json_encode($allSeasons);?>,
+                    teams: <?php echo json_encode($allTeams);?>,
+                };
             };
         </script>
     </body>
