@@ -21,12 +21,21 @@
     }
     
     $allTeams = array();
-    $cursor = $mongo->forecast->reference->find(array('type' => 'team'));
+    $cursor = $mongo->forecast->reference->find(array('type' => 'team'))->fields(array('_id'=>true));
     $currentElement = $cursor->getNext();
     while($currentElement){
-        $allTeams[] = $currentElement;
+        $allTeams[] = $currentElement['_id'];
         $currentElement = $cursor->getNext();
     }
+
+    $allDrivers = array();
+    $cursor = $mongo->forecast->reference->find(array('type' => 'driver'))->fields(array('_id'=>true));
+    $currentElement = $cursor->getNext();
+    while($currentElement){
+        $allDrivers[] = $currentElement['_id'];
+        $currentElement = $cursor->getNext();
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
@@ -54,6 +63,7 @@
         <link href="/forecast/css/base.css" rel="stylesheet">
         <link href="/forecast/css/seasons.css" rel="stylesheet">
         <script src="/forecast/js/seasons.js"></script>
+        <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
     <body ng-controller="SeasonController" ng-init="init('inputData')">
         <div class="modal fade" id="modal-popup">
@@ -90,15 +100,35 @@
                             <div class="tab-pane option-tab" id="teams">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div>
+                                        <div ng-show="isAddNewTeamProcess">
                                             <ul class="list-group">
-                                              <li class="list-group-item">
-                                                <input type="text" class="form-control" placeholder="Название команды" ng-model="selectedSeason.stages[key]">
-                                              </li>
-                                              <li class="list-group-item">
-                                                  <span class="label label-default">Default</span>
-                                                  <span class="label label-default">Default</span>
-                                              </li>
+                                                <li class="list-group-item">
+                                                    <input type="text" class="form-control" placeholder="Название команды" 
+                                                           ng-model="newTeam.name"
+                                                           ng-change='filterTeams(newTeam.name)'
+                                                           ng-enter="selectTeam()"
+                                                           >
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="" ng-repeat="(key,driver) in newTeam.drivers track by $index">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" disabled value="{{driver}}">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-default" type="button" ng-click="removeDriver(key)"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            </span>                                                        
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                    <div>
+                                                        <input type="text" class="form-control" placeholder="Пилот" 
+                                                           ng-model="newDriver"
+                                                           ng-change='filterDrivers(newDriver)'
+                                                           ng-enter="selectDriver()"
+                                                           >
+
+                                                    </div>
+                                                </li>
                                             </ul>                                            
                                         </div>
                                         <button type="button" class="btn btn-default" ng-click="addNewTeam();">
@@ -106,9 +136,18 @@
                                         </button>
                                     </div>
                                     <div class="col-lg-6">
-                                        <button ng-repeat="team in teams" type="button" class="btn btn-default">
-                                            {{team._id}}
-                                        </button>
+                                        <div>
+                                            <button ng-repeat="team in filteredTeams" type="button" class="btn btn-default"
+                                                ng-click="applyTeam(team)">
+                                                {{team}}
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button ng-repeat="driver in filteredDrivers" type="button" class="btn btn-default"
+                                                ng-click="applyDriver(driver)">
+                                                {{driver}}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -147,6 +186,7 @@
                 return {
                     data: <?php echo json_encode($allSeasons);?>,
                     teams: <?php echo json_encode($allTeams);?>,
+                    drivers: <?php echo json_encode($allDrivers);?>,
                 };
             };
         </script>
