@@ -100,6 +100,10 @@
                             <div class="tab-pane option-tab" id="teams">
                                 <div class="row">
                                     <div class="col-lg-6">
+<pre ng-repeat="team in selectedSeason.teams">
+<span class="team-name">{{team.name}}</span>
+{{team.drivers.join('\n')}}
+</pre>                                        
                                         <div ng-show="isAddNewTeamProcess">
                                             <ul class="list-group">
                                                 <li class="list-group-item">
@@ -107,6 +111,7 @@
                                                            ng-model="newTeam.name"
                                                            ng-change='filterTeams(newTeam.name)'
                                                            ng-enter="selectTeam()"
+                                                           ng-focus="showTeams()"
                                                            >
                                                 </li>
                                                 <li class="list-group-item">
@@ -117,32 +122,33 @@
                                                                 <button class="btn btn-default" type="button" ng-click="removeDriver(key)"><span class="glyphicon glyphicon-minus"></span></button>
                                                             </span>                                                        
                                                         </div>
-                                                        
                                                     </div>
-                                                    
                                                     <div>
                                                         <input type="text" class="form-control" placeholder="Пилот" 
                                                            ng-model="newDriver"
                                                            ng-change='filterDrivers(newDriver)'
                                                            ng-enter="selectDriver()"
+                                                           ng-focus="showDrivers()"
                                                            >
-
                                                     </div>
                                                 </li>
                                             </ul>                                            
                                         </div>
-                                        <button type="button" class="btn btn-default" ng-click="addNewTeam();">
+                                        <button type="button" class="btn btn-default" ng-hide="isAddNewTeamProcess" ng-click="addNewTeam();">
                                             Добавить <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-success" ng-show="isAddNewTeamProcess" ng-click="saveNewTeam();">
+                                            Сохранить <span class="glyphicon glyphicon-ok"></span>
                                         </button>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div>
+                                        <div ng-show="isShowTeams">
                                             <button ng-repeat="team in filteredTeams" type="button" class="btn btn-default"
                                                 ng-click="applyTeam(team)">
                                                 {{team}}
                                             </button>
                                         </div>
-                                        <div>
+                                        <div ng-show="isShowDrivers">
                                             <button ng-repeat="driver in filteredDrivers" type="button" class="btn btn-default"
                                                 ng-click="applyDriver(driver)">
                                                 {{driver}}
@@ -169,7 +175,7 @@
             </div>
             <div class="panel-body">
                 <div class="input-group" >
-                    <button ng-repeat="season in data" type="button" class="btn btn-default">
+                    <button ng-repeat="season in seasons" type="button" class="btn btn-default">
                         {{season.year}}
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
@@ -184,7 +190,7 @@
         <script type="text/javascript">
             function inputData(){
                 return {
-                    data: <?php echo json_encode($allSeasons);?>,
+                    seasons: <?php echo json_encode($allSeasons);?>,
                     teams: <?php echo json_encode($allTeams);?>,
                     drivers: <?php echo json_encode($allDrivers);?>,
                 };

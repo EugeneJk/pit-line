@@ -17,35 +17,8 @@
     
     $mongo = new MongoClient("mongodb://localhost");
     switch($action){
-        case 'login':
-            $filter = array('username' => $data['username'], 'password' => $data['password']);
-            $user = $mongo->forecast->users->findOne($filter);
-            if($user){
-                $_SESSION['forecast'] = array(
-                    'user' => $user,
-                    'is_logged' => true,
-                );
-                $result['success'] = true;
-                $result['error'] = '';
-                $result['data'] = $user;
-            } else {
-                $result['error'] = 'incorrect_login_password';
-            }
-            break;
-        case 'make_forecast':
-            $year = (isset($input['year'])) ? intval($input['year']) : null;
-            $stageNumber = (isset($input['stage_number'])) ? intval($input['stage_number']) : null;
-            $user = $_SESSION['forecast']['user']['username'];
-            $filter = array('year' => $year);
-            $season = $mongo->forecast->results->findOne($filter);
-            $season['stages'][$stageNumber]['forecasts'][$user] = $input['forecast'];
-            $mongo->forecast->results->update($filter,$season);
-            if($season){
-                $result['success'] = true;
-                $result['error'] = '';
-            } else {
-                $result['error'] = 'wrong_submit';
-            }
+        case 'save':
+            $mongo->forecast->seasons->insert($data);
             break;
     }
     

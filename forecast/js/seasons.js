@@ -1,7 +1,9 @@
 angular.module('forecast', ['OnEnterEvent'])
-.controller('SeasonController', function($scope, $filter) {
-    $scope.data = null;
+.controller('SeasonController', function($scope, $filter, $http) {
+    $scope.apiUrl = 'api/season.php';
     $scope.isAddNewTeamProcess = false;
+    $scope.isShowTeams = false;
+    $scope.isShowDrivers = false;
     $scope.filteredTeams = [];
     $scope.filteredDrivers = [];
     $scope.currentDrivers = null;
@@ -17,7 +19,7 @@ angular.module('forecast', ['OnEnterEvent'])
         for(var index in initData){
             $scope[index] = initData[index];
         }
-        
+        $scope.currentTeams = angular.copy($scope.teams);
         $scope.currentDrivers = angular.copy($scope.drivers);
         $scope.filteredTeams = $scope.teams;
         $scope.newTeam = getNewTeamData();
@@ -29,7 +31,20 @@ angular.module('forecast', ['OnEnterEvent'])
     };
 
     $scope.saveNewSeason = function(){
-        
+        var data = {
+            action: 'save',
+            data: $scope.selectedSeason,
+        };
+        $http.post($scope.apiUrl, data).success(successSave).error(errorSave);        
+        $(modalId).modal('hide');
+    };
+    var successSave = function(data, status, headers, config){
+        // this callback will be called asynchronously
+        // when the response is available
+    };
+    var errorSave = function(data, status, headers, config){
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
     };
     
     $scope.addNewStage = function(){
@@ -43,15 +58,26 @@ angular.module('forecast', ['OnEnterEvent'])
         $scope.filterDrivers('');
     };
     
+    $scope.saveNewTeam = function(){
+        $scope.selectedSeason.teams.push($scope.newTeam);
+        $scope.currentTeams.splice($scope.currentTeams.indexOf($scope.newTeam.name),1);
+        $scope.isAddNewTeamProcess = false;
+    };
+    
     $scope.filterTeams = function(val){
         if(!$scope.isAddNewTeamProcess){ return; }
-        $scope.filteredTeams = $filter('filter')($scope.teams, val);
+        $scope.filteredTeams = $filter('filter')($scope.currentTeams, val);
     };
     
     $scope.applyTeam = function(val){
         if(!$scope.isAddNewTeamProcess){ return; }
         $scope.newTeam.name = val;
         $scope.filterTeams(val);
+    };
+    
+    $scope.showTeams = function(){
+        $scope.isShowTeams = true;
+        $scope.isShowDrivers = false;
     };
 
     $scope.filterDrivers = function(val){
@@ -77,6 +103,11 @@ angular.module('forecast', ['OnEnterEvent'])
         $scope.filterDrivers('');
     };
     
+    $scope.showDrivers = function(){
+        $scope.isShowTeams = false;
+        $scope.isShowDrivers = true;
+    };
+    
     $scope.removeStage = function(number){
         $scope.selectedSeason.stages.splice(number,1);
     };
@@ -87,5 +118,15 @@ angular.module('forecast', ['OnEnterEvent'])
     
     var getNewTeamData = function(){
         return{name: '',drivers: []};
-    }
+    };
+    
+    
+    
+    $scope.$watch('isAddNewTeamProcess', function(newValue, oldValue) {
+        if(newValue === false){
+            $scope.isShowTeams = false;
+            $scope.isShowDrivers = false;
+        }
+    });    
+    
 });
