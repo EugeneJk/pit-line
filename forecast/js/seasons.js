@@ -56,6 +56,8 @@ angular.module('forecast', ['OnEnterEvent'])
         $scope.newTeam = getNewTeamData();
         $scope.currentDrivers = angular.copy($scope.drivers);
         $scope.filterDrivers('');
+        $scope.currentTeams = angular.copy($scope.teams);
+        $scope.filterTeams('');
     };
     
     $scope.saveNewTeam = function(){
