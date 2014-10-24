@@ -61,7 +61,7 @@
         <script src="/forecast/js/seasons.js"></script>
         <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
-    <body ng-controller="SeasonController" ng-init="init('inputData')">
+    <body ng-controller="SeasonController" ng-init="init('inputData')" class="system-body">
         <div class="modal fade" id="modal-popup">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -165,11 +165,15 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->        
-        <div class="panel panel-primary panel-custom">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Сезоны</h3>
             </div>
             <div class="panel-body">
+                <ol class="breadcrumb">
+                    <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
+                    <li class="active">Сезоны</li>
+                </ol>                
                 <div class="input-group" >
                     <button ng-repeat="season in seasons" type="button" class="btn btn-default">
                         {{season.year}}

@@ -30,15 +30,20 @@ include_once 'check.php';
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    Ошибка
+                    Панель управления системы "Прогноз"
                 </h3>
             </div>
             <div class="panel-body">
                 <ol class="breadcrumb">
-                    <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
-                    <li class="active">Ошибка</li>
-                </ol>
-                <h1>Произошла ошибка. Вернитьсь в панель управления и повторите ввод еще раз</h1>
+                    <li class="active">Панель управления системы "Прогноз"</li>
+                </ol>           
+                <a href="index.php?action=users" class="btn btn-default">Пользователи</a>
+                <a href="index.php?action=seasons" class="btn btn-default">Сезоны</a>
+                <a href="index.php?action=reference" class="btn btn-default">Справочник</a>
+                <a href="index.php?action=rules" class="btn btn-default">Правила начисления очков</a>
+            </div>
+            <div class="panel-footer tool-bar">
+                <a href="index.php?action=logout">Выход</a>
             </div>
         </div>        
     </body>

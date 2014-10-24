@@ -2,7 +2,7 @@
 include_once 'check.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="forecast">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,21 +25,37 @@ include_once 'check.php';
         <![endif]-->
 
         <link href="/forecast/css/base.css" rel="stylesheet">
+        <!--link href="/forecast/css/reference.css" rel="stylesheet"-->
+        <script src="/forecast/js/reference.js"></script>
+        <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
-    <body class="system-body">
+    <body ng-controller="ReferenceController" ng-init="init('inputData')" class="system-body">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">
-                    Ошибка
-                </h3>
+                <h3 class="panel-title">Справочник</h3>
             </div>
             <div class="panel-body">
                 <ol class="breadcrumb">
                     <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
-                    <li class="active">Ошибка</li>
-                </ol>
-                <h1>Произошла ошибка. Вернитьсь в панель управления и повторите ввод еще раз</h1>
+                    <li class="active">Справочник</li>
+                </ol>                
+                <div class="tab-pane option-tab" id="teams">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            Тут будет список пилотов
+                        </div>
+                        <div class="col-lg-6">
+                            Тут будет список команд
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>        
+        </div>
+        <script type="text/javascript">
+                    function inputData() {
+                        return {
+                        };
+                    };
+        </script>
     </body>
 </html>
