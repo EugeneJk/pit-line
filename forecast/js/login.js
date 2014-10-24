@@ -18,7 +18,7 @@ angular.module('forecast', ['OnEnterEvent'])
                 },
             };
                     
-            $http.post('/forecast/action.php', data,
+            $http.post('api.php', data,
                 {
                     headers: {'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'}
                 }
@@ -39,7 +39,7 @@ angular.module('forecast', ['OnEnterEvent'])
             $timeout(hideIncorrectLogin, 2500);
         } else {
             $scope.showSuccess = true;
-            //$window.location.href = 'select.php';
+            $window.location.href = 'index.php?action=options';
         }
     };
     

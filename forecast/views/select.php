@@ -1,10 +1,6 @@
 <?php
-    if(!isset($_SESSION)){
-        session_start();
-    }
-    if(!isset($_SESSION['forecast']['is_logged']) || !$_SESSION['forecast']['is_logged']){
-        header('Location: login.php');
-    }
+    include_once 'check.php';
+    
     $mongo = new MongoClient("mongodb://localhost");
     $year = isset($_GET['year'])? intval($_GET['year']) : null;
     $stage = isset($_GET['year'])? intval($_GET['stage']) : null;

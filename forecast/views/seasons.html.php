@@ -1,10 +1,6 @@
     <?php
-    if(!isset($_SESSION)){
-        session_start();
-    }
-    if(!isset($_SESSION['forecast']['is_logged']) || !$_SESSION['forecast']['is_logged']){
-        header('Location: login.php');
-    } 
+    include_once 'check.php';
+    
     $mongo = new MongoClient("mongodb://localhost");
     $filter = array('active' => true);
     $fields = array(
