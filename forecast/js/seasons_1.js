@@ -1,5 +1,5 @@
 angular.module('forecast', ['OnEnterEvent'])
-.controller('SeasonsController', function($scope, $filter, $http) {
+.controller('SeasonController', function($scope, $filter, $http) {
     $scope.apiUrl = 'api/season.php';
     $scope.isAddNewTeamProcess = false;
     $scope.isShowTeams = false;
