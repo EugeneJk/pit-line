@@ -57,8 +57,8 @@
         <![endif]-->
         
         <link href="/forecast/css/base.css" rel="stylesheet">
-        <link href="/forecast/css/seasons.css" rel="stylesheet">
-        <script src="/forecast/js/seasons.js"></script>
+        <link href="/forecast/css/selectedSeason.css" rel="stylesheet">
+        <script src="/forecast/js/selectedSeason.js"></script>
         <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
     <body ng-controller="SeasonController" ng-init="init('inputData')" class="system-body">

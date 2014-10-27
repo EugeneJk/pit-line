@@ -1,37 +1,9 @@
-    <?php
-    include_once 'check.php';
-    
-    $mongo = new MongoClient("mongodb://localhost");
-    $filter = array('active' => true);
-    $fields = array(
-        'year' => true,
-        '_id' => false,
-    );
+<?php
+include_once 'check.php';
 
-    $allSeasons = array();
-    $cursor = $mongo->forecast->results->find()->fields($fields);
-    $currentElement = $cursor->getNext();
-    while($currentElement){
-        $allSeasons[] = $currentElement;
-        $currentElement = $cursor->getNext();
-    }
-    
-    $allTeams = array();
-    $cursor = $mongo->forecast->reference->find(array('type' => 'team'))->fields(array('_id'=>true));
-    $currentElement = $cursor->getNext();
-    while($currentElement){
-        $allTeams[] = $currentElement['_id'];
-        $currentElement = $cursor->getNext();
-    }
+use forecast\Seasons;
 
-    $allDrivers = array();
-    $cursor = $mongo->forecast->reference->find(array('type' => 'driver'))->fields(array('_id'=>true));
-    $currentElement = $cursor->getNext();
-    while($currentElement){
-        $allDrivers[] = $currentElement['_id'];
-        $currentElement = $cursor->getNext();
-    }
-    
+$seasons = new Seasons();
 ?>
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
@@ -55,7 +27,7 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
+
         <link href="/forecast/css/base.css" rel="stylesheet">
         <link href="/forecast/css/seasons.css" rel="stylesheet">
         <script src="/forecast/js/seasons.js"></script>
@@ -70,28 +42,29 @@
                 <ol class="breadcrumb">
                     <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
                     <li class="active">Сезоны</li>
-                </ol>                
-                <div class="input-group" >
-                    <button ng-repeat="season in seasons" type="button" class="btn btn-default">
-                        {{season.year}}
+                </ol>
+                <span ng-repeat="season in seasons">
+                    <button  type="button" class="btn btn-default"
+                             ng-class="{'btn-success': season.active}" ng-click="openSeason(season._id);">
+                        {{season._id}}
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
-                </div>
-                    <button type="button" class="btn btn-default" ng-click="addNewSeason();">
-                        Новый <span class="glyphicon glyphicon-plus"></span>
-                    </button>
+                </span>
+                <button type="button" class="btn btn-primary" ng-click="openSeason('new');">
+                    Новый <span class="glyphicon glyphicon-plus"></span>
+                </button>
             </div>
             <div class="panel-footer tool-bar">
                 <a href="index.php?action=logout">Выход</a>
             </div>
-            
+
         </div>
         <script type="text/javascript">
-            function inputData(){
-                return {
-                    seasons: <?php echo json_encode($allSeasons);?>,
-                };
-            };
+                    function inputData() {
+                        return {
+                            seasons: <?php echo json_encode($seasons->getSeasonsList()); ?>,
+                        };
+                    };
         </script>
     </body>
 </html>

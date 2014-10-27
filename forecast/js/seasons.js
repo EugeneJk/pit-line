@@ -1,5 +1,6 @@
 angular.module('forecast', ['OnEnterEvent'])
-.controller('SeasonsController', function($scope) {
+.controller('SeasonsController', function($scope, $window) {
+    $scope.seasons = null;
     $scope.init = function(initFunction){
         var initData = eval(initFunction)();
         for(var index in initData){
@@ -7,6 +8,7 @@ angular.module('forecast', ['OnEnterEvent'])
         }
     };
 
-    $scope.addNewSeason = function(){
+    $scope.openSeason = function(seasonId){
+        $window.location.href = '?action=selectedSeason&season=' + seasonId;
     };
 });

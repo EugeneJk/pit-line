@@ -17,6 +17,9 @@ switch ($action) {
     case 'seasons':
         include 'views/seasons.html.php';
         break;
+    case 'selected_season':
+        include 'views/selectedSeason.html.php';
+        break;
     case 'reference':
         include 'views/reference.html.php';
         break;

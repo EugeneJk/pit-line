@@ -11,7 +11,7 @@ class Session {
             session_start();
         }
         if (!isset($_SESSION['forecast'])) {
-            $this->mongo_connection = new \MongoClient("mongodb://localhost");
+//            $this->mongo_connection = new \MongoClient("mongodb://localhost");
             $this->save();
         } else {
             $this->read();
@@ -23,12 +23,12 @@ class Session {
             case 'user':
                 $this->user = $_SESSION['forecast']['user'];
                 break;
-            case 'user':
-                $this->mongo_connection = $_SESSION['forecast']['mongo_connection'];
-                break;
+//            case 'mongo_connection':
+//                $this->mongo_connection = $_SESSION['forecast']['mongo_connection'];
+//                break;
             default:
                 $this->user = $_SESSION['forecast']['user'];
-                $this->mongo_connection = $_SESSION['forecast']['mongo_connection'];
+//                $this->mongo_connection = $_SESSION['forecast']['mongo_connection'];
                 break;
         }
     }
@@ -36,7 +36,7 @@ class Session {
     public function save() {
         $_SESSION['forecast'] = array(
             'user' => $this->user,
-            'mongo_connection' => $this->mongo_connection,
+//            'mongo_connection' => $this->mongo_connection,
         );
     }
 
@@ -45,10 +45,10 @@ class Session {
         return $this->user === null ? false : true;
     }
 
-    public function getMongoConnection() {
-        $this->read('mongo_connection');
-        return $this->mongo_connection;
-    }
+//    public function getMongoConnection() {
+//        $this->read('mongo_connection');
+//        return $this->mongo_connection;
+//    }
 
     public function getUser() {
         $this->read('user');
