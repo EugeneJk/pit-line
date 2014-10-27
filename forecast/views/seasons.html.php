@@ -77,19 +77,19 @@
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                 </div>
+                    <button type="button" class="btn btn-default" ng-click="addNewSeason();">
+                        Новый <span class="glyphicon glyphicon-plus"></span>
+                    </button>
             </div>
             <div class="panel-footer tool-bar">
-                <button type="button" class="btn btn-default" ng-click="addNewSeason();">
-                    Новый <span class="glyphicon glyphicon-plus"></span>
-                </button>
+                <a href="index.php?action=logout">Выход</a>
             </div>
+            
         </div>
         <script type="text/javascript">
             function inputData(){
                 return {
                     seasons: <?php echo json_encode($allSeasons);?>,
-                    teams: <?php echo json_encode($allTeams);?>,
-                    drivers: <?php echo json_encode($allDrivers);?>,
                 };
             };
         </script>
