@@ -2,14 +2,9 @@
 
 namespace forecast;
 
-class Seasons
+class Seasons extends MongoModel
 {
-    private $collection;
-    
-    function __construct() {
-        $mongo = Mongo::getMongo();
-        $this->collection = $mongo->forecast->seasons;
-    }
+    protected $collection_name = 'seasons';
 
     public function getSeasonsList()
     {
@@ -26,5 +21,14 @@ class Seasons
         }
         
         return $result;
+    }
+    
+    public function getSeason($id)
+    {
+        if($id === 'new'){
+            return array();
+        } else {
+            return $this->collection->findOne(array('_id' => $id));
+        }
     }
 }

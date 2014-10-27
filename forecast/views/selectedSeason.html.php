@@ -1,38 +1,12 @@
-    <?php
+<?php
     include_once 'check.php';
+    use forecast\Reference;
+    use forecast\Seasons;
     
-    $mongo = new MongoClient("mongodb://localhost");
-    $filter = array('active' => true);
-    $fields = array(
-        'year' => true,
-        '_id' => false,
-    );
-
-    $allSeasons = array();
-    $cursor = $mongo->forecast->results->find()->fields($fields);
-    $currentElement = $cursor->getNext();
-    while($currentElement){
-        $allSeasons[] = $currentElement;
-        $currentElement = $cursor->getNext();
-    }
-    
-    $allTeams = array();
-    $cursor = $mongo->forecast->reference->find(array('type' => 'team'))->fields(array('_id'=>true));
-    $currentElement = $cursor->getNext();
-    while($currentElement){
-        $allTeams[] = $currentElement['_id'];
-        $currentElement = $cursor->getNext();
-    }
-
-    $allDrivers = array();
-    $cursor = $mongo->forecast->reference->find(array('type' => 'driver'))->fields(array('_id'=>true));
-    $currentElement = $cursor->getNext();
-    while($currentElement){
-        $allDrivers[] = $currentElement['_id'];
-        $currentElement = $cursor->getNext();
-    }
-    
+    $season = new Seasons;
+    $reference = new Reference();
 ?>
+
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
     <head>
@@ -190,9 +164,9 @@
         <script type="text/javascript">
             function inputData(){
                 return {
-                    seasons: <?php echo json_encode($allSeasons);?>,
-                    teams: <?php echo json_encode($allTeams);?>,
-                    drivers: <?php echo json_encode($allDrivers);?>,
+                    season: <?php echo json_encode($season->getSeason($selectedSeason));?>,
+                    teams: <?php echo json_encode($reference->getTeamsList());?>,
+                    drivers: <?php echo json_encode($reference->getDriversList());?>,
                 };
             };
         </script>

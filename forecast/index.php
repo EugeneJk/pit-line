@@ -18,6 +18,7 @@ switch ($action) {
         include 'views/seasons.html.php';
         break;
     case 'selected_season':
+        $selectedSeason = $_GET['season'];
         include 'views/selectedSeason.html.php';
         break;
     case 'reference':

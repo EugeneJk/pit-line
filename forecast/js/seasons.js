@@ -9,6 +9,6 @@ angular.module('forecast', ['OnEnterEvent'])
     };
 
     $scope.openSeason = function(seasonId){
-        $window.location.href = '?action=selectedSeason&season=' + seasonId;
+        $window.location.href = '?action=selected_season&season=' + seasonId;
     };
 });
