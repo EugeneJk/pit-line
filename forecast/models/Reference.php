@@ -9,9 +9,22 @@ class Reference extends MongoModel
 
     public function getDriversList()
     {
+        return $this->getList('driver');
+    }
 
+    public function getStagesList()
+    {
+        return $this->getList('stage');
+    }
+
+    public function getTeamsList()
+    {
+        return $this->getList('team');
+    }
+    
+    protected function getList($type){
         $result = array();
-        $cursor = $this->collection->find(array('type' => 'driver'))->fields(array('_id' => true));
+        $cursor = $this->collection->find(array('type' => $type))->fields(array('_id' => true));
         $currentElement = $cursor->getNext();
         while($currentElement)
         {

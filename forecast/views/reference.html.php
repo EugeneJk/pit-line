@@ -1,5 +1,10 @@
 <?php
 include_once 'check.php';
+
+use forecast\Reference;
+
+$reference = new Reference();
+
 ?>
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
@@ -42,13 +47,19 @@ include_once 'check.php';
                 <div class="tab-pane option-tab" id="teams">
                     <div class="row">
                         <div class="col-lg-4">
-                            Тут будет список гран-при
+                            <div class="label-item" ng-repeat="stage in stages">
+                                {{stage}}
+                            </div>
                         </div>
                         <div class="col-lg-4">
-                            Тут будет список пилотов
+                            <div class="label-item" ng-repeat="driver in drivers">
+                                {{driver}}
+                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            Тут будет список команд
+                        <div class="label-item" class="col-lg-4">
+                            <div ng-repeat="team in teams">
+                                {{team}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,6 +68,9 @@ include_once 'check.php';
         <script type="text/javascript">
                     function inputData() {
                         return {
+                            stages: <?php echo json_encode($reference->getStagesList());?>,
+                            drivers: <?php echo json_encode($reference->getDriversList());?>,
+                            teams: <?php echo json_encode($reference->getTeamsList());?>,
                         };
                     };
         </script>
