@@ -44,7 +44,52 @@ class Seasons extends MongoModel
                         'drivers' => array(),
                     ),
                 ),
-                'rules' => array(),
+                'rules' => array(
+                    'qual' => array(
+                        array(
+                            'position' => 1,
+                            'points' => array(
+                                -2 => null,
+                                -1 => null,
+                                0 => 9,
+                                1 => 7,
+                                2 => 5,
+                            ),
+                        )
+                    ),
+                    'race' => array(
+                        array(
+                            'position' => 1,
+                            'points' => array(
+                                -2 => null,
+                                -1 => null,
+                                0 => 9,
+                                1 => 7,
+                                2 => 5,
+                            ),
+                        ),
+                        array(
+                            'position' => 2,
+                            'points' => array(
+                                -2 => null,
+                                -1 => 6,
+                                0 => 8,
+                                1 => 6,
+                                2 => 5,
+                            ),
+                        ),
+                        array(
+                            'position' => 3,
+                            'points' => array(
+                                -2 => 3,
+                                -1 => 5,
+                                0 => 7,
+                                1 => 5,
+                                2 => 4,
+                            ),
+                        ),
+                    ),
+                ),
             );
         } else {
             return $this->collection->findOne(array('_id' => $id));

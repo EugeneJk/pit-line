@@ -126,7 +126,64 @@ $reference = new Reference();
                         </div>
 <!-- ****************************   Teams   ******************************** -->                        
                         <div class="tab-pane option-tab" id="rules">
-                            Rules
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="column-header">Квалификация:</div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Позиция</th>
+                                                <th ng-repeat="offset in qualOffsetArray">
+                                                    {{offset}}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="(index, value) in season.rules.qual">
+                                                <td>{{value.position}}</td>
+                                                <td ng-repeat="offset in qualOffsetArray">
+                                                    <input type="text" class="form-control score-input" ng-disabled="season.rules.qual[index].points[offset] === null"
+                                                           ng-model="season.rules.qual[index].points[offset]" >
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>                                    
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="newQualPosition">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" ng-click="addNewQualPostion()">Добавить</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="column-header">Гонка:</div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Позиция</th>
+                                                <th ng-repeat="offset in raceOffsetArray">
+                                                    {{offset}}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="(index, value) in season.rules.race">
+                                                <td>{{value.position}}</td>
+                                                <td ng-repeat="offset in raceOffsetArray">
+                                                    <input type="text" class="form-control score-input" ng-disabled="season.rules.race[index].points[offset] === null"
+                                                           ng-model="season.rules.race[index].points[offset]" >
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="newRacePosition">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" ng-click="addNewRacePostion()">Добавить</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 <!-- *********************************************************************** -->                        
                     </div>

@@ -3,6 +3,11 @@ angular.module('forecast', ['OnEnterEvent'])
     $scope.apiUrl = 'api.php';
     $scope.selectedTeam = 0;
     $scope.availableDrivers = null;
+    $scope.raceDefaultOffset = 2;
+    $scope.raceOffsetArray = [];
+    $scope.qualDefaultOffset = 1;
+    $scope.qualOffsetArray = [];
+    
     $scope.season = {
         _id:'',
         stages:[],
@@ -16,6 +21,8 @@ angular.module('forecast', ['OnEnterEvent'])
         }
         
         refreshAvailableDrivers();
+        refreshRaceOffsetArray();
+        refreshQualOffsetArray();
     };
 
     $scope.saveSeason = function(){
@@ -60,59 +67,6 @@ angular.module('forecast', ['OnEnterEvent'])
         $scope.season.teams[$scope.selectedTeam].drivers.splice(number,1);
         refreshAvailableDrivers();
     };
-
-/*
-    
-    $scope.saveNewTeam = function(){
-        $scope.season.teams.push($scope.newTeam);
-        $scope.currentTeams.splice($scope.currentTeams.indexOf($scope.newTeam.name),1);
-        $scope.isAddNewTeamProcess = false;
-    };
-    
-    $scope.filterTeams = function(val){
-        if(!$scope.isAddNewTeamProcess){ return; }
-        $scope.filteredTeams = $filter('filter')($scope.currentTeams, val);
-    };
-    
-    $scope.applyTeam = function(val){
-        if(!$scope.isAddNewTeamProcess){ return; }
-        $scope.newTeam.name = val;
-        $scope.filterTeams(val);
-    };
-    
-    $scope.showTeams = function(){
-        $scope.isShowTeams = true;
-        $scope.isShowDrivers = false;
-    };
-
-    $scope.filterDrivers = function(val){
-        if(!$scope.isAddNewTeamProcess){ return; }
-        $scope.filteredDrivers = $filter('filter')($scope.currentDrivers, val);
-    };
-    
-    $scope.applyDriver = function(val){
-        if(!$scope.isAddNewTeamProcess){ return; }
-        $scope.newTeam.drivers.push(val);
-        $scope.currentDrivers.splice($scope.currentDrivers.indexOf(val),1);
-        $scope.newDriver = '';
-        $scope.filterDrivers($scope.newDriver);
-    };
-    
-    $scope.removeDriver = function(number){
-        if(!$scope.isAddNewTeamProcess){ return; }
-        $scope.newTeam.drivers.splice(number,1);
-        $scope.currentDrivers = angular.copy($scope.drivers);
-        for(var index in $scope.newTeam.drivers){
-            $scope.currentDrivers.splice($scope.currentDrivers.indexOf($scope.newTeam.drivers[index]),1);
-        }
-        $scope.filterDrivers('');
-    };
-    
-    $scope.showDrivers = function(){
-        $scope.isShowTeams = false;
-        $scope.isShowDrivers = true;
-    };
-*/
     
     $scope.tabClick = function(number){
         $('#options-tabs #t' + number).tab('show') ;
@@ -125,6 +79,41 @@ angular.module('forecast', ['OnEnterEvent'])
             for(var j in currentTeam.drivers){
                 $scope.availableDrivers.splice($scope.availableDrivers.indexOf(currentTeam.drivers[j]),1);
             }
+        }
+    };
+    
+    $scope.addNewRacePostion = function(){
+        var newPonts = {};
+        for(var i in $scope.raceOffsetArray){
+            newPonts[$scope.raceOffsetArray[i]] = ($scope.newRacePosition > Math.abs($scope.raceOffsetArray[i])) || ($scope.raceOffsetArray[i] >= 0)  ? 0 : null;
+        }
+        $scope.season.rules.race.push({
+            position: $scope.newRacePosition,
+            points: newPonts,
+        });
+        $scope.newRacePosition = '';
+    };
+    var refreshRaceOffsetArray = function(){
+        $scope.raceOffsetArray = [];
+        for(var i = -$scope.raceDefaultOffset; i <= $scope.raceDefaultOffset; i++){
+            $scope.raceOffsetArray.push(i);
+        }
+    };
+    $scope.addNewQualPostion = function(){
+        var newPonts = {};
+        for(var i in $scope.qualOffsetArray){
+            newPonts[$scope.qualOffsetArray[i]] = ($scope.newQualPosition > Math.abs($scope.qualOffsetArray[i])) || ($scope.qualOffsetArray[i] >= 0)  ? 0 : null;
+        }
+        $scope.season.rules.qual.push({
+            position: $scope.newQualPosition,
+            points: newPonts,
+        });
+        $scope.newQualPosition = '';
+    };
+    var refreshQualOffsetArray = function(){
+        $scope.qualOffsetArray = [];
+        for(var i = -$scope.qualDefaultOffset; i <= $scope.qualDefaultOffset; i++){
+            $scope.qualOffsetArray.push(i);
         }
     };
 });
