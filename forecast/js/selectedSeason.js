@@ -27,19 +27,18 @@ angular.module('forecast', ['OnEnterEvent'])
 
     $scope.saveSeason = function(){
         var data = {
-            action: 'save',
+            action: 'save_season',
             data: $scope.season,
         };
-        console.log(data);
-        //$http.post($scope.apiUrl, data).success(successSave).error(errorSave);        
+        $http.post($scope.apiUrl, data).success(successSave).error(errorSave);        
     };
     var successSave = function(data, status, headers, config){
+        console.log(data);
         // this callback will be called asynchronously
         // when the response is available
     };
     var errorSave = function(data, status, headers, config){
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
+        console.log(data);
     };
     
     $scope.addNewStage = function(){

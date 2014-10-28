@@ -41,10 +41,13 @@ include_once 'check.php';
                 </ol>                
                 <div class="tab-pane option-tab" id="teams">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                            Тут будет список гран-при
+                        </div>
+                        <div class="col-lg-4">
                             Тут будет список пилотов
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             Тут будет список команд
                         </div>
                     </div>

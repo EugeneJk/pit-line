@@ -2,6 +2,7 @@
     include_once 'include.php';
 
     use forecast\User;
+    use forecast\Seasons;
     
     $result = array('success' => false, 'error' => 'unknown_action');
     
@@ -14,6 +15,11 @@
             } else {
                 $result['error'] = 'incorrect_login';
             }
+            break;
+            
+        case 'save_season':
+            $season = new Seasons();
+            $season->setSeason($data);
             break;
         case 'make_forecast':
             break;

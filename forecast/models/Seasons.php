@@ -95,4 +95,15 @@ class Seasons extends MongoModel
             return $this->collection->findOne(array('_id' => $id));
         }
     }
+    
+    public function setSeason($data)
+    {
+        $findQuery = array('_id' => $data['_id']);
+        $isNew = $this->collection->find($findQuery)->count() == 0;
+        if($isNew){
+            $this->collection->insert($data);
+        }else{
+            $this->collection->update($findQuery,$data);
+        }
+    }
 }
