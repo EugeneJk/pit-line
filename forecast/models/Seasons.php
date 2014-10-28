@@ -26,7 +26,25 @@ class Seasons extends MongoModel
     public function getSeason($id)
     {
         if($id === 'new'){
-            return array();
+            return array(
+                '_id' => '',
+                'active' => true,
+                'stages' => array(
+                    'Тестовый Этап 1',
+                    'Тестовый Этап 2',
+                    'Тестовый Этап 3',
+                ),
+                'teams' => array(
+                    array(
+                        'name' => 'Red Bull',
+                        'drivers' => array('Себастьян Феттель','Даниель Риккардо'),
+                    ),
+                    array(
+                        'name' => 'Mercedes',
+                    ),
+                ),
+                'rules' => array(),
+            );
         } else {
             return $this->collection->findOne(array('_id' => $id));
         }

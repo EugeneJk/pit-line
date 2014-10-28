@@ -21,19 +21,4 @@ class Reference extends MongoModel
         
         return $result;
     }
-
-    public function getTeamsList()
-    {
-
-        $result = array();
-        $cursor = $this->collection->find(array('type' => 'team'))->fields(array('_id' => true));
-        $currentElement = $cursor->getNext();
-        while($currentElement)
-        {
-            $result[] = $currentElement['_id'];
-            $currentElement = $cursor->getNext();
-        }
-        
-        return $result;
-    }
 }
