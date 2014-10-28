@@ -56,8 +56,8 @@ $reference = new Reference();
                                 {{driver}}
                             </div>
                         </div>
-                        <div class="label-item" class="col-lg-4">
-                            <div ng-repeat="team in teams">
+                        <div class="col-lg-4">
+                            <div class="label-item" ng-repeat="team in teams">
                                 {{team}}
                             </div>
                         </div>

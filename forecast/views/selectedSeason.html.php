@@ -77,6 +77,30 @@ $reference = new Reference();
                         </div>
 <!-- ****************************   Teams   ******************************** -->                        
                         <div class="tab-pane option-tab" id="teams">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="column-header">Команды:</div>
+                                    <div class="btn-group-vertical" style="width: 100%">
+                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in season.teams"
+                                            ng-click="removeTeam(key)">
+                                        {{value.name}} <span class="glyphicon glyphicon-arrow-right pull-right"></span>
+                                    </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="column-header">Свободные команды:</div>
+                                    <div class="btn-group-vertical" style="width: 100%">
+                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in availableTeams"
+                                            ng-click="selectTeam(key)">
+                                        <span class="glyphicon glyphicon-arrow-left"></span> {{value}} 
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
                             <div class="input-group" ng-repeat="(key, value) in season.teams track by $index">
                                 <input type="text" class="form-control" placeholder="Название команды" ng-model="season.teams[key].name">
                                 <span class="input-group-btn">
@@ -200,9 +224,11 @@ $reference = new Reference();
         </div>
         <script type="text/javascript">
             function inputData(){
-            return {
-                season: <?php echo json_encode($season->getSeason($selectedSeason)); ?>,
-                drivers: <?php echo json_encode($reference->getDriversList()); ?>,
+                return {
+                    season: <?php echo json_encode($season->getSeason($selectedSeason)); ?>,
+                    stages: <?php echo json_encode($reference->getStagesList());?>,
+                    drivers: <?php echo json_encode($reference->getDriversList());?>,
+                    teams: <?php echo json_encode($reference->getTeamsList());?>,
                 };
             };
         </script>

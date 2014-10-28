@@ -3,6 +3,7 @@ angular.module('forecast', ['OnEnterEvent'])
     $scope.apiUrl = 'api.php';
     $scope.selectedTeam = 0;
     $scope.availableDrivers = null;
+    $scope.availableTeams = null;
     $scope.raceDefaultOffset = 2;
     $scope.raceOffsetArray = [];
     $scope.qualDefaultOffset = 1;
@@ -21,6 +22,7 @@ angular.module('forecast', ['OnEnterEvent'])
         }
         
         refreshAvailableDrivers();
+        refreshAvailableTeams();
         refreshRaceOffsetArray();
         refreshQualOffsetArray();
     };
@@ -53,6 +55,15 @@ angular.module('forecast', ['OnEnterEvent'])
     };
     $scope.removeTeam = function(number){
         $scope.season.teams.splice(number,1);
+        refreshAvailableTeams();
+    };
+    var refreshAvailableTeams = function(){
+        $scope.availableTeams = angular.copy($scope.teams);
+        for(var i in $scope.season.teams){
+            console.log($scope.season.teams[i].name, $scope.availableTeams);
+            $scope.availableTeams.splice($scope.availableTeams.indexOf($scope.season.teams[i].name),1);
+            console.log($scope.availableTeams);
+        }
     };
 
     $scope.selectTeam = function(number){
