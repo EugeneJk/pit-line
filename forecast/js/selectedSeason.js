@@ -2,6 +2,7 @@ angular.module('forecast', ['OnEnterEvent'])
 .controller('SeasonController', function($scope, $filter, $http) {
     $scope.apiUrl = 'api.php';
     $scope.selectedTeam = 0;
+    $scope.availableDrivers = null;
     $scope.season = {
         _id:'',
         stages:[],
@@ -13,6 +14,8 @@ angular.module('forecast', ['OnEnterEvent'])
         for(var index in initData){
             $scope[index] = initData[index];
         }
+        
+        refreshAvailableDrivers();
     };
 
     $scope.saveSeason = function(){
@@ -48,6 +51,14 @@ angular.module('forecast', ['OnEnterEvent'])
 
     $scope.selectTeam = function(number){
         $scope.selectedTeam = number;
+    };
+    $scope.selectDriver = function(number){
+        $scope.season.teams[$scope.selectedTeam].drivers.push($scope.availableDrivers[number]);
+        refreshAvailableDrivers();
+    };
+    $scope.removeDriver = function(number){
+        $scope.season.teams[$scope.selectedTeam].drivers.splice(number,1);
+        refreshAvailableDrivers();
     };
 
 /*
@@ -105,5 +116,15 @@ angular.module('forecast', ['OnEnterEvent'])
     
     $scope.tabClick = function(number){
         $('#options-tabs #t' + number).tab('show') ;
+    };
+
+    var refreshAvailableDrivers = function(){
+        $scope.availableDrivers = angular.copy($scope.drivers);
+        for(var i in $scope.season.teams){
+            var currentTeam = $scope.season.teams[i];
+            for(var j in currentTeam.drivers){
+                $scope.availableDrivers.splice($scope.availableDrivers.indexOf(currentTeam.drivers[j]),1);
+            }
+        }
     };
 });

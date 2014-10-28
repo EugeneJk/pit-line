@@ -41,6 +41,7 @@ class Seasons extends MongoModel
                     ),
                     array(
                         'name' => 'Mercedes',
+                        'drivers' => array(),
                     ),
                 ),
                 'rules' => array(),

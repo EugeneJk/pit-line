@@ -93,25 +93,31 @@ $reference = new Reference();
                         <div class="tab-pane option-tab" id="drivers">
                             <div class="row">
                                 <div class="col-md-4">
+                                    <div class="column-header">Команды:</div>
                                     <ul class="nav nav-pills nav-stacked">
                                         <li ng-repeat="(key, value) in season.teams track by $index"
                                             ng-class="{active : selectedTeam == key}" ng-click="selectTeam(key)">
-                                            <a href="#">{{value.name}}</a>
+                                            <a href="#">
+                                                <span class="badge pull-right">{{value.drivers.length}}</span>
+                                                {{value.name}}
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-md-4">
+                                    <div class="column-header">Пилоты команды:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
-                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="value in season.teams[selectedTeam].drivers"
-                                            ng-click="">
-                                        {{value}} <span class="glyphicon glyphicon-arrow-right"></span>
+                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in season.teams[selectedTeam].drivers"
+                                            ng-click="removeDriver(key)">
+                                        {{value}} <span class="glyphicon glyphicon-arrow-right pull-right"></span>
                                     </button>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
+                                    <div class="column-header">Свободные пилоты:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
-                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="value in drivers"
-                                            ng-click="">
+                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in availableDrivers"
+                                            ng-click="selectDriver(key)">
                                         <span class="glyphicon glyphicon-arrow-left"></span> {{value}} 
                                     </button>
                                     </div>
