@@ -3,6 +3,7 @@ include_once 'check.php';
 use forecast\Users;
 
 $user = new Users();
+$user->getUsersList()
 ?>
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
@@ -28,7 +29,7 @@ $user = new Users();
         <![endif]-->
 
         <link href="/forecast/css/base.css" rel="stylesheet">
-        <!--link href="/forecast/css/reference.css" rel="stylesheet"-->
+        <link href="/forecast/css/users.css" rel="stylesheet">
         <script src="/forecast/js/users.js"></script>
         <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
@@ -42,16 +43,17 @@ $user = new Users();
                     <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
                     <li class="active">Пользователи</li>
                 </ol>                
-                <span ng-repeat="user in users">
-                    <button  type="button" class="btn btn-default"
-                            ng-click="editUser(user._id);">
-                        {{user.username}}
-                        <span class="glyphicon glyphicon-pencil"></span>
+                <div class="label-item-third" ng-class="{'bg-success': user.active, 'bg-warning text-muted': !user.active}" ng-repeat="user in users">
+                    {{user.firstname}} {{user.lastname}}<br>
+                    <b>{{user.username}}</b>
+                    <span class="badge pull-right"><span class="glyphicon glyphicon-off sm-ctrl" ng-click="deactivateUser(user._id)"></span></span>
+                    <span class="badge pull-right"><span class="glyphicon glyphicon-pencil sm-ctrl" ng-click="editUser(user._id)"></span></span>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary" ng-click="editUser('new');">
+                        Новый <span class="glyphicon glyphicon-plus"></span>
                     </button>
-                </span>
-                <button type="button" class="btn btn-primary" ng-click="editUser('new');">
-                    Новый <span class="glyphicon glyphicon-plus"></span>
-                </button>
+                <div>
             </div>
             <div class="panel-footer tool-bar">
                 <a href="index.php?action=logout">Выход</a>
