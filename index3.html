@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bootstrap 101 Template</title>
+
+        <!-- jQuery -->
+        <script src="/lib/jquery/jquery.min.js"></script>
+        <!-- angularjs -->
+        <script src="/lib/angularjs/angular.min.js"></script>
+        <!-- Bootstrap -->
+        <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        <style>
+            .field-selected-label{
+                background-color:  #5bc0de !important;
+                color: white !important;
+            }
+            .field-completed-label{
+                background-color:  #5cb85c !important;
+                color: white !important;
+            }
+            .field-clear-label{
+                background-color:  white;
+                color: black;
+            }
+            .field-label{
+                margin-left: 10px;
+                margin-bottom: 0px !important;
+                width: 60px;
+            }
+            .driver-button{
+                margin-left: 10px;
+//                margin-bottom: 0px !important;
+                width: 250px;
+                text-align: left;
+            }
+            .drivers-panel{
+                width: 300px;
+                height: 238px;
+                overflow: auto;
+            }
+        </style>
+    </head>
+    <body ng-controller="TodoCtrl">
+        <table style="margin-left: 10px;margin-top: 10px;">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="input-group" ng-repeat="item in inputFields">
+                            <span class="input-group-addon field-label" ng-class="{'field-completed-label': dataFields[item.id].isset ,'field-selected-label': currentSelected === item.id}">
+                                {{item.name}}
+                            </span>
+                            <input type="text" class="form-control" ng-class="{'field-completed-label': dataFields[item.id].isset }" ng-model='dataFields[item.id].name' ng-readonly="dataFields[item.id].isset" ng-change='filterItems(dataFields[item.id].name)' ng-focus="showDrivers(item.id);" ng-enter="selectDriver(item.id)">
+                            <a class="btn input-group-addon field-label field-clear-label" ng-click="clearSelection(item.id)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                            
+                        </div>
+                    </td>
+                    <td>
+                        <div class="drivers-panel">
+                            <div ng-repeat="team in filteredItems">
+                                <button type="button" class="btn btn-default driver-button" ng-click="applyDriver(team.driver)">
+                                    {{team.display}}
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+       
+        
+        
+        <script type="text/javascript">
+            angular.module('app', [])
+            .controller('TodoCtrl', function($scope, $filter) {
+                var teamsBase = [
+                    {name: 'Red Bull', drivers: ['Себастьян Феттель','Даниэль Риккардо']},
+                    {name: 'Mercedes', drivers: ['Льюис Хэмилтон','Нико Росберг']},
+                    {name: 'Ferrari', drivers: ['Фернандо Алонсо','Кими Райкконен']},
+                    {name: 'Lotus', drivers: ['Роман Грожан','Пастор Мальдонадо']},
+                    {name: 'McLaren', drivers: ['Дженсон Баттон','Кевин Магнуссен']},
+                    {name: 'Force India', drivers: ['Нико Хюлкенберг',' Серхио Перес']},
+                    {name: 'Sauber', drivers: ['Адриан Сутил','Эстебан Гутьеррес']},
+                    {name: 'Toro Rosso', drivers: ['Жан-Эрик Вернь','Даниил Квят']},
+                    {name: 'Williams', drivers: ['Фелипе Масса','Валттери Боттас']},
+                    {name: 'Marussia', drivers: ['Жюль Бьянки','Макс Чилтон']},
+                    {name: 'Caterham', drivers: ['Камуи Кобаяши','Маркус Эриксон']},
+                ];
+                
+                var populateTeams = function(){
+                    var drivers = []
+                    for(var i in teamsBase){
+                        for(var j in teamsBase[i].drivers){
+                            drivers.push({driver:teamsBase[i].drivers[j], display: teamsBase[i].name + ': ' + teamsBase[i].drivers[j]});
+                        }
+                    }
+                    return drivers;
+                };
+                
+                $scope.driversBase = populateTeams();
+                $scope.driversRace = angular.copy($scope.driversBase);
+                $scope.driversQual = angular.copy($scope.driversBase);
+                
+                $scope.dataFields = {
+                    'pole-position':{name:'', isset:false},
+                    'first-place':{name:'', isset:false},
+                    'second-place':{name:'', isset:false},
+                    'third-place':{name:'', isset:false},
+                    'fourth-place':{name:'', isset:false},
+                    'fifth-place':{name:'', isset:false},
+                    'tenth-place':{name:'', isset:false},
+                };
+                $scope.inputFields = [
+                    {id:'pole-position', name: 'Поул'},
+                    {id:'first-place', name: '1'},
+                    {id:'second-place', name: '2'},
+                    {id:'third-place', name: '3'},
+                    {id:'fourth-place', name: '4'},
+                    {id:'fifth-place', name: '5'},
+                    {id:'tenth-place', name: '10'},
+                ];
+                
+                $scope.currentDrivers = null;
+                $scope.currentSelected = null;
+                $scope.showDrivers = function(selected)
+                {
+                    $scope.currentSelected = selected;
+                    if(selected === 'pole-position'){
+                        $scope.currentDrivers = $scope.driversQual;
+                    }else{
+                        $scope.currentDrivers = $scope.driversRace;
+                    }
+                    $scope.filterItems($scope.dataFields[selected].name);
+                };
+                
+                $scope.selectDriver = function(selected){
+                    if($scope.filteredItems.length === 1){
+                        $scope.dataFields[selected].name = $scope.filteredItems[0].driver;
+                        $scope.dataFields[selected].isset = true;
+                        removeDriverFromCurrentList($scope.dataFields[selected].name);
+                        $scope.filterItems($scope.dataFields[selected].name);
+                    }
+                };
+                
+                $scope.filterItems = function(val){
+                    $scope.filteredItems = $filter('filter')($scope.currentDrivers, val);
+                };
+                
+                var removeDriverFromCurrentList = function(name){
+                    for(var i in $scope.currentDrivers){
+                        if($scope.currentDrivers[i].driver === name){
+                            $scope.currentDrivers.splice(i,1);
+                            break;
+                        }
+                    }
+                };
+                
+                $scope.clearSelection = function(selected){
+                    $scope.currentSelected = selected;
+                    if(selected === 'pole-position'){
+                        $scope.driversQual = angular.copy($scope.driversBase);
+                        $scope.dataFields[selected].name = '';
+                        $scope.dataFields[selected].isset = false;
+                    }else{
+                        $scope.driversRace = angular.copy($scope.driversBase);
+                        $scope.dataFields[selected].name = '';
+                        $scope.dataFields[selected].isset = false;
+                        for(var field in $scope.dataFields){
+                            if($scope.dataFields[field].isset === true){
+                                for(var driverIndex in $scope.driversRace){
+                                    if($scope.driversRace[driverIndex].driver === $scope.dataFields[field].name){
+                                        $scope.driversRace.splice(driverIndex,1);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        //$scope.filteredItems = [];
+                    }
+                    $scope.filterItems($scope.currentSelected);
+                    $scope.showDrivers($scope.currentSelected);
+                };
+                
+                $scope.applyDriver= function(name){
+                    $scope.dataFields[$scope.currentSelected].name = name;
+                    $scope.filterItems(name);
+                    $scope.selectDriver($scope.currentSelected);
+                    
+                }
+            }).directive('ngEnter', function () {
+                return function (scope, element, attrs) {
+                    element.bind("keydown keypress", function (event) {
+                        if(event.which === 13) {
+                            scope.$apply(function (){
+                                scope.$eval(attrs.ngEnter);
+                            });
+
+                            event.preventDefault();
+                        }
+                    });
+                };
+            });
+        </script>
+    </body>
+</html>
