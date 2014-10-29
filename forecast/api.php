@@ -1,7 +1,7 @@
 <?php
     include_once 'include.php';
 
-    use forecast\User;
+    use forecast\Users;
     use forecast\Seasons;
     use \forecast\Reference;
     
@@ -9,7 +9,7 @@
     
     switch($action){
         case 'login':
-            $user = new User();
+            $user = new Users();
             if($user->login($data['username'],$data['password'])){
                 $result['success'] = true;
                 $result['error'] = '';

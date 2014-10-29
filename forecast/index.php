@@ -2,11 +2,11 @@
 
 include_once 'include.php';
 
-use forecast\User;
+use forecast\Users;
 
 switch ($action) {
     case 'logout':
-        $user = new User();
+        $user = new Users();
         $user->logout();
     case 'login':
         include 'views/login.html.php';

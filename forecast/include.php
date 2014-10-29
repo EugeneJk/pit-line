@@ -16,7 +16,7 @@
         }
     }
     
-    $models = array('Mongo', 'MongoModel', 'User', 'Seasons', 'Reference');
+    $models = array('Mongo', 'MongoModel', 'Users', 'Seasons', 'Reference');
     foreach($models as $model){
         include_once 'models/' . $model . '.php';
     }

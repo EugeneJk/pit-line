@@ -1,5 +1,8 @@
 <?php
 include_once 'check.php';
+use forecast\Users;
+
+$user = new Users();
 ?>
 <!DOCTYPE html>
 <html lang="en" ng-app="forecast">
@@ -39,7 +42,16 @@ include_once 'check.php';
                     <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
                     <li class="active">Пользователи</li>
                 </ol>                
-                Тут будет список пользователей системы
+                <span ng-repeat="user in users">
+                    <button  type="button" class="btn btn-default"
+                            ng-click="editUser(user._id);">
+                        {{user.username}}
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </span>
+                <button type="button" class="btn btn-primary" ng-click="editUser('new');">
+                    Новый <span class="glyphicon glyphicon-plus"></span>
+                </button>
             </div>
             <div class="panel-footer tool-bar">
                 <a href="index.php?action=logout">Выход</a>
@@ -48,6 +60,7 @@ include_once 'check.php';
         <script type="text/javascript">
                     function inputData() {
                         return {
+                            users : <?php echo json_encode($user->getUsersList()); ?>,
                         };
                     };
         </script>
