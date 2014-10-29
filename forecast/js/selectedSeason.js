@@ -4,6 +4,7 @@ angular.module('forecast', ['OnEnterEvent'])
     $scope.selectedTeam = 0;
     $scope.availableDrivers = null;
     $scope.availableTeams = null;
+    $scope.availableStages = null;
     $scope.raceDefaultOffset = 2;
     $scope.raceOffsetArray = [];
     $scope.qualDefaultOffset = 1;
@@ -23,6 +24,7 @@ angular.module('forecast', ['OnEnterEvent'])
         
         refreshAvailableDrivers();
         refreshAvailableTeams();
+        refreshAvailableStages();
         refreshRaceOffsetArray();
         refreshQualOffsetArray();
     };
@@ -43,15 +45,30 @@ angular.module('forecast', ['OnEnterEvent'])
         console.log(data);
     };
     
-    $scope.addNewStage = function(){
-        $scope.season.stages.push('');
+    $scope.addNewStage = function(number){
+        $scope.season.stages.push($scope.availableStages[number]);
+        refreshAvailableStages();
     };
     $scope.removeStage = function(number){
         $scope.season.stages.splice(number,1);
+        refreshAvailableStages();
+    };
+    var refreshAvailableStages = function(){
+        $scope.availableStages = angular.copy($scope.stages);
+        for(var i in $scope.season.stages){
+            var pos = $scope.availableStages.indexOf($scope.season.stages[i]);
+            if(pos !== -1){
+                $scope.availableStages.splice(pos,1);
+            }
+        }
     };
     
-    $scope.addNewTeam = function(){
-        $scope.season.teams.push({name:'',drivers:[]});
+    $scope.addNewTeam = function(number){
+        $scope.season.teams.push({
+            name: $scope.availableTeams[number],
+            drivers: []
+        });
+        refreshAvailableTeams();
     };
     $scope.removeTeam = function(number){
         $scope.season.teams.splice(number,1);
@@ -60,9 +77,10 @@ angular.module('forecast', ['OnEnterEvent'])
     var refreshAvailableTeams = function(){
         $scope.availableTeams = angular.copy($scope.teams);
         for(var i in $scope.season.teams){
-            console.log($scope.season.teams[i].name, $scope.availableTeams);
-            $scope.availableTeams.splice($scope.availableTeams.indexOf($scope.season.teams[i].name),1);
-            console.log($scope.availableTeams);
+            var pos = $scope.availableTeams.indexOf($scope.season.teams[i].name);
+            if(pos !== -1){
+                $scope.availableTeams.splice(pos,1);
+            }
         }
     };
 
@@ -87,7 +105,10 @@ angular.module('forecast', ['OnEnterEvent'])
         for(var i in $scope.season.teams){
             var currentTeam = $scope.season.teams[i];
             for(var j in currentTeam.drivers){
-                $scope.availableDrivers.splice($scope.availableDrivers.indexOf(currentTeam.drivers[j]),1);
+                var pos = $scope.availableDrivers.indexOf(currentTeam.drivers[j]);
+                if(pos !== -1){
+                    $scope.availableDrivers.splice(pos,1);
+                }
             }
         }
     };

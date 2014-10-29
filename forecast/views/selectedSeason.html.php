@@ -63,17 +63,26 @@ $reference = new Reference();
                     <div class="tab-content">
 <!-- ***************************   Stages   ******************************** -->                        
                         <div class="tab-pane active option-tab" id="stages">
-                            <div class="input-group" ng-repeat="(key, value) in season.stages track by $index">
-                                <input type="text" class="form-control" placeholder="Название этапа" ng-model="season.stages[key]">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" ng-click="removeStage(key)">
-                                        <span class="glyphicon glyphicon-minus"></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="column-header">Этапы:</div>
+                                    <div class="btn-group-vertical" style="width: 100%">
+                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in season.stages"
+                                            ng-click="removeStage(key)">
+                                        {{value}} <span class="glyphicon glyphicon-arrow-right pull-right"></span>
                                     </button>
-                                </span>
-                            </div>                                
-                            <button type="button" class="btn btn-default" ng-click="addNewStage();">
-                                Добавить <span class="glyphicon glyphicon-plus"></span>
-                            </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="column-header">Доступные этапы:</div>
+                                    <div class="btn-group-vertical" style="width: 100%">
+                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in availableStages"
+                                            ng-click="addNewStage(key)">
+                                        <span class="glyphicon glyphicon-arrow-left"></span> {{value}} 
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 <!-- ****************************   Teams   ******************************** -->                        
                         <div class="tab-pane option-tab" id="teams">
@@ -91,27 +100,12 @@ $reference = new Reference();
                                     <div class="column-header">Свободные команды:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
                                     <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in availableTeams"
-                                            ng-click="selectTeam(key)">
+                                            ng-click="addNewTeam(key)">
                                         <span class="glyphicon glyphicon-arrow-left"></span> {{value}} 
                                     </button>
                                     </div>
                                 </div>
                             </div>
-                            
-                            
-                            
-                            
-                            <div class="input-group" ng-repeat="(key, value) in season.teams track by $index">
-                                <input type="text" class="form-control" placeholder="Название команды" ng-model="season.teams[key].name">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" ng-click="removeTeam(key)">
-                                        <span class="glyphicon glyphicon-minus"></span>
-                                    </button>
-                                </span>
-                            </div>                                
-                            <button type="button" class="btn btn-default" ng-click="addNewTeam();">
-                                Добавить <span class="glyphicon glyphicon-plus"></span>
-                            </button>
                         </div>
 <!-- ***************************   Drivers   ******************************* -->                        
                         <div class="tab-pane option-tab" id="drivers">
