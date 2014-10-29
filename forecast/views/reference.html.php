@@ -47,18 +47,39 @@ $reference = new Reference();
                 <div class="tab-pane option-tab" id="teams">
                     <div class="row">
                         <div class="col-lg-4">
+                            <div class="column-header">Этапы:</div>
                             <div class="label-item" ng-repeat="stage in stages">
                                 {{stage}}
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="label-item" ng-repeat="driver in drivers">
-                                {{driver}}
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="newStage">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="addNewStage(newStage)">Добавить</button>
+                                </span>
                             </div>
                         </div>
                         <div class="col-lg-4">
+                            <div class="column-header">Пилоты:</div>
+                            <div class="label-item" ng-repeat="driver in drivers">
+                                {{driver}}
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="newDriver">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="addNewDriver(newDriver)">Добавить</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="column-header">Команды:</div>
                             <div class="label-item" ng-repeat="team in teams">
                                 {{team}}
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="newTeam">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="addNewTeam(newTeam)">Добавить</button>
+                                </span>
                             </div>
                         </div>
                     </div>

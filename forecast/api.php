@@ -3,6 +3,7 @@
 
     use forecast\User;
     use forecast\Seasons;
+    use \forecast\Reference;
     
     $result = array('success' => false, 'error' => 'unknown_action');
     
@@ -21,6 +22,15 @@
             $season = new Seasons();
             $season->setSeason($data);
             break;
+
+        case 'add_reference_item':
+            $reference = new Reference();
+            $opRes = $reference->addNewItem($data);
+            $result['success'] = $opRes === true;
+            $result['error'] = $result['success'] ? '' : $opRes;
+            $result['inserted_item'] = $result['success'] ? $data : null;
+            break;
+
         case 'make_forecast':
             break;
     }

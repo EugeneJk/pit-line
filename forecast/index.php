@@ -24,9 +24,6 @@ switch ($action) {
     case 'reference':
         include 'views/reference.html.php';
         break;
-    case 'rules':
-        include 'views/rules.html.php';
-        break;
     case 'users':
         include 'views/users.html.php';
         break;

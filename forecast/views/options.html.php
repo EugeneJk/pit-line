@@ -40,7 +40,6 @@ include_once 'check.php';
                 <a href="index.php?action=users" class="btn btn-default">Пользователи</a>
                 <a href="index.php?action=seasons" class="btn btn-default">Сезоны</a>
                 <a href="index.php?action=reference" class="btn btn-default">Справочник</a>
-                <a href="index.php?action=rules" class="btn btn-default">Правила начисления очков</a>
             </div>
             <div class="panel-footer tool-bar">
                 <a href="index.php?action=logout">Выход</a>

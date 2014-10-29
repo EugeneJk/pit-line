@@ -1,5 +1,5 @@
 angular.module('forecast', ['OnEnterEvent'])
-.controller('SeasonController', function($scope, $filter, $http) {
+.controller('SeasonController', function($scope, $http) {
     $scope.apiUrl = 'api.php';
     $scope.selectedTeam = 0;
     $scope.availableDrivers = null;
