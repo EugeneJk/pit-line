@@ -57,7 +57,6 @@ $seasons = new Seasons();
             <div class="panel-footer tool-bar">
                 <a href="index.php?action=logout">Выход</a>
             </div>
-
         </div>
         <script type="text/javascript">
                     function inputData() {

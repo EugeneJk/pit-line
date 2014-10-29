@@ -46,7 +46,7 @@ $reference = new Reference();
                 </ol>                
                 <div class="tab-pane option-tab" id="teams">
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-sm-4">
                             <div class="column-header">Этапы:</div>
                             <div class="label-item" ng-repeat="stage in stages">
                                 {{stage}}
@@ -58,7 +58,7 @@ $reference = new Reference();
                                 </span>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-sm-4">
                             <div class="column-header">Пилоты:</div>
                             <div class="label-item" ng-repeat="driver in drivers">
                                 {{driver}}
@@ -70,7 +70,7 @@ $reference = new Reference();
                                 </span>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-sm-4">
                             <div class="column-header">Команды:</div>
                             <div class="label-item" ng-repeat="team in teams">
                                 {{team}}
@@ -84,6 +84,9 @@ $reference = new Reference();
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="panel-footer tool-bar">
+                <a href="index.php?action=logout">Выход</a>
             </div>
         </div>
         <script type="text/javascript">

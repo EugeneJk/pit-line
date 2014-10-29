@@ -79,9 +79,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-footer">
                 <center><button class="btn btn-primary" ng-click="submitData();">Отправить</button></center>
+            </div>
+            <div class="panel-footer tool-bar">
+                <a href="index.php?action=logout">Выход</a>
             </div>
         </div>
         <script type="text/javascript">

@@ -29,8 +29,8 @@
         <script src="/forecast/js/login.js"></script>
         <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
-    <body ng-controller="LoginController">
-        <div class="panel panel-primary panel-custom">
+    <body ng-controller="LoginController" class="system-body">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Вход</h3>
             </div>

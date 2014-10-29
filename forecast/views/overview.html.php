@@ -34,7 +34,7 @@
         <script src="/forecast/js/overview.js"></script>
     </head>
     <body ng-controller="OverviewController" ng-init="init('inputData')">
-        <div class="panel panel-primary panel-custom">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Сезон {{data.year}}</h3>
             </div>
@@ -49,10 +49,8 @@
                     </button>
                 </div>
             </div>
-            <div class="panel-footer">
-                <button type="button" class="btn btn-default" ng-class="{'btn-primary': isFillResults}" ng-click="switchInput();">Ввод результатов</button>
-                <button type="button" class="btn btn-default" ng-click="goToSeasons();">Сезоны</button>
-                <button type="button" class="btn btn-default">Пользователи</button>
+            <div class="panel-footer tool-bar">
+                <a href="index.php?action=logout">Выход</a>
             </div>
         </div>
         

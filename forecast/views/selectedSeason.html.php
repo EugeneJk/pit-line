@@ -64,7 +64,7 @@ $reference = new Reference();
 <!-- ***************************   Stages   ******************************** -->                        
                         <div class="tab-pane active option-tab" id="stages">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-sm-6">
                                     <div class="column-header">Этапы:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
                                     <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in season.stages"
@@ -73,7 +73,7 @@ $reference = new Reference();
                                     </button>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-sm-6">
                                     <div class="column-header">Доступные этапы:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
                                     <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in availableStages"
@@ -87,7 +87,7 @@ $reference = new Reference();
 <!-- ****************************   Teams   ******************************** -->                        
                         <div class="tab-pane option-tab" id="teams">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-sm-6">
                                     <div class="column-header">Команды:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
                                     <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in season.teams"
@@ -96,7 +96,7 @@ $reference = new Reference();
                                     </button>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-sm-6">
                                     <div class="column-header">Свободные команды:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
                                     <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in availableTeams"
@@ -110,7 +110,7 @@ $reference = new Reference();
 <!-- ***************************   Drivers   ******************************* -->                        
                         <div class="tab-pane option-tab" id="drivers">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-sm-4">
                                     <div class="column-header">Команды:</div>
                                     <ul class="nav nav-pills nav-stacked">
                                         <li ng-repeat="(key, value) in season.teams track by $index"
@@ -122,7 +122,7 @@ $reference = new Reference();
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-sm-4">
                                     <div class="column-header">Пилоты команды:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
                                     <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in season.teams[selectedTeam].drivers"
@@ -131,7 +131,7 @@ $reference = new Reference();
                                     </button>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-sm-4">
                                     <div class="column-header">Свободные пилоты:</div>
                                     <div class="btn-group-vertical" style="width: 100%">
                                     <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in availableDrivers"
@@ -145,7 +145,7 @@ $reference = new Reference();
 <!-- ****************************   Teams   ******************************** -->                        
                         <div class="tab-pane option-tab" id="rules">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-sm-6">
                                     <div class="column-header">Квалификация:</div>
                                     <table class="table table-bordered">
                                         <thead>
@@ -173,7 +173,7 @@ $reference = new Reference();
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-sm-6">
                                     <div class="column-header">Гонка:</div>
                                     <table class="table table-bordered">
                                         <thead>

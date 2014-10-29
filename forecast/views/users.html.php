@@ -41,6 +41,9 @@ include_once 'check.php';
                 </ol>                
                 Тут будет список пользователей системы
             </div>
+            <div class="panel-footer tool-bar">
+                <a href="index.php?action=logout">Выход</a>
+            </div>
         </div>
         <script type="text/javascript">
                     function inputData() {

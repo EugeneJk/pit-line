@@ -40,6 +40,9 @@ include_once 'check.php';
                 </ol>
                 <h1>Произошла ошибка. Вернитьсь в панель управления и повторите ввод еще раз</h1>
             </div>
+            <div class="panel-footer tool-bar">
+                <a href="index.php?action=logout">Выход</a>
+            </div>
         </div>        
     </body>
 </html>
