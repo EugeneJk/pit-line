@@ -8,31 +8,23 @@ angular.module('forecast', ['OnEnterEvent'])
         }
     };
     
-    /*
-    $scope.activateDeactivateUser = function(id, active){
+    
+    $scope.saveUser = function(){
         var data = {
-            action: 'activate_deactivate_user',
-            data: {
-                id: id,
-                active: active,
-            },
+            action: 'save_user',
+            data: $scope.user,
         };
         $http.post($scope.apiUrl, data).success(successSave).error(errorSave);        
     };
     
     var successSave = function(data, status, headers, config){
         if(data.success === true){
-            for(var index in $scope.users)
-                if($scope.users[index]._id === data.updated_item.id){
-                    $scope.users[index].active = data.updated_item.active;
-                    break;
-                }
+            $window.location = 'index.php?action=users';
         }
         console.log(data);
     };
     var errorSave = function(data, status, headers, config){
         console.log(data);
     };
-    */
     
 });

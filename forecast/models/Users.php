@@ -4,11 +4,14 @@ namespace forecast;
 class Users extends MongoModel
 {
     protected $collection_name = 'users';
-    
+    private $fieldsCollection = array('_id', 'username', 'password', 'role', 'firstname', 'lastname', 'active');
+
+
     public function login($username, $password){
         $filter = array(
             'username' => $username,
-            'password' => $password
+            'password' => $password,
+            'active' => true,
         );
         $user = $this->collection->findOne($filter);
         if($user){
@@ -32,6 +35,7 @@ class Users extends MongoModel
             'firstname' => 1,
             'lastname' => 1,
             'active' => 1,
+            'role' => 1,
         );
         $result = array();
         $cursor = $this->collection->find()->fields($fields)->sort(array('username' => 1));
@@ -76,5 +80,48 @@ class Users extends MongoModel
             );
         }
         return $result;
+    }
+    
+    public function setUser($data){
+        
+        $id = null;
+        if(!empty($data['_id'])){
+            $id = $data['_id'];
+        } else {
+            if(empty($data['password'])){
+                unset($data['password']);
+            }
+        }
+        $data['active'] = $data['active'] === 'yes';
+        unset($data['_id']);
+        
+        $emptyFields = array();
+        foreach($data as $key => $value){
+            if(!in_array($key, $this->fieldsCollection)){
+                unset($data[$key]);
+                continue;
+            }
+            
+            if(empty(trim($value))){
+                $emptyFields[] = $key;
+            }
+        }
+
+        if(!empty($emptyFields)){
+            return array('error' => 'empty_fields', 'fields' => $emptyFields);
+        }
+        
+        if(empty($id)){
+            $this->collection->insert($data);
+        } else {
+            $filter = array('_id' => new \MongoId($id));
+            if($this->collection->find($filter)->count() == 0){
+                return array('error' => 'user_not_found', 'fields' => null);
+            } else {
+                $this->collection->update($filter,array('$set' => $data));
+            }
+        }
+        
+        return true;
     }
 }

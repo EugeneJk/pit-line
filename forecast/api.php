@@ -39,6 +39,14 @@
             $result['updated_item'] = $result['success'] ? $data : null;
             break;
 
+        case 'save_user':
+            $user = new Users();
+            $opRes = $user->setUser($data);
+            $result['success'] = $opRes === true;
+            $result['error'] = $result['success'] ? '' : $opRes['error'];
+            $result['updated_item'] = $result['success'] ? $data : $opRes['fields'];
+            break;
+        
         case 'make_forecast':
             break;
     }
