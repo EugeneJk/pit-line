@@ -27,6 +27,10 @@ switch ($action) {
     case 'users':
         include 'views/users.html.php';
         break;
+    case 'selected_user':
+        $selectedUser = $_GET['user'];
+        include 'views/selectedUser.html.php';
+        break;
 
     default:
         include 'views/error.html.php';

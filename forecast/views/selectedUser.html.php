@@ -40,19 +40,10 @@ $user = new Users();
             <div class="panel-body">
                 <ol class="breadcrumb">
                     <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
-                    <li class="active">Пользователи</li>
+                    <li><a href="index.php?action=users">Пользователи</a></li>
+                    <li class="active">{{user.username}}</li>
                 </ol>                
-                <div class="label-item-third" ng-class="{'bg-success': user.active, 'bg-warning text-muted': !user.active}" ng-repeat="user in users">
-                    {{user.firstname}} {{user.lastname}}<br>
-                    <b>{{user.username}}</b>
-                    <span class="badge pull-right"><span class="glyphicon glyphicon-off sm-ctrl" ng-click="activateDeactivateUser(user._id, !user.active)"></span></span>
-                    <span class="badge pull-right"><span class="glyphicon glyphicon-pencil sm-ctrl" ng-click="editUser(user._id)"></span></span>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-primary" ng-click="editUser('new');">
-                        Новый <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                <div>
+                {{user}}
             </div>
             <div class="panel-footer tool-bar">
                 <a href="index.php?action=logout">Выход</a>
@@ -61,7 +52,7 @@ $user = new Users();
         <script type="text/javascript">
                     function inputData() {
                         return {
-                            users : <?php echo json_encode($user->getUsersList()); ?>,
+                            user : <?php echo json_encode($user->getUser($selectedUser)); ?>,
                         };
                     };
         </script>

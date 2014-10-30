@@ -20,7 +20,7 @@ angular.module('forecast', ['OnEnterEvent'])
     };
     
     $scope.editUser = function(id){
-        $window.location = 'index.php?action=selected_user&user=' + id;
+        console.log(id);
     };
     
     var successSave = function(data, status, headers, config){

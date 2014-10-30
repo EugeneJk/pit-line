@@ -57,4 +57,9 @@ class Users extends MongoModel
         
         return 'user_not_exists';
     }
+    
+    public function getUser($id){
+        $filter = array('_id' => new \MongoId($id));
+        return $this->collection->find($filter);
+    }
 }
