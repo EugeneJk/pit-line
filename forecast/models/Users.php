@@ -45,7 +45,16 @@ class Users extends MongoModel
         return $result;
     }
     
-    public function deactivateUser($id){
+    public function activateDeactivate($id, $active) {
+        $filter = array('_id' => new \MongoId($id));
+        $count = $this->collection->find($filter)->count();
+
+        if($count === 1){
+            $this->collection->update($filter, array('$set' => array('active' => $active)));
+            
+            return true;
+        }
         
+        return 'user_not_exists';
     }
 }

@@ -3,7 +3,7 @@
 
     use forecast\Users;
     use forecast\Seasons;
-    use \forecast\Reference;
+    use forecast\Reference;
     
     $result = array('success' => false, 'error' => 'unknown_action');
     
@@ -29,6 +29,14 @@
             $result['success'] = $opRes === true;
             $result['error'] = $result['success'] ? '' : $opRes;
             $result['inserted_item'] = $result['success'] ? $data : null;
+            break;
+
+        case 'activate_deactivate_user':
+            $user = new Users();
+            $opRes =  $user->activateDeactivate($data['id'], $data['active']);
+            $result['success'] = $opRes === true;
+            $result['error'] = $result['success'] ? '' : $opRes;
+            $result['updated_item'] = $result['success'] ? $data : null;
             break;
 
         case 'make_forecast':

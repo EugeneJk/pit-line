@@ -46,7 +46,7 @@ $user->getUsersList()
                 <div class="label-item-third" ng-class="{'bg-success': user.active, 'bg-warning text-muted': !user.active}" ng-repeat="user in users">
                     {{user.firstname}} {{user.lastname}}<br>
                     <b>{{user.username}}</b>
-                    <span class="badge pull-right"><span class="glyphicon glyphicon-off sm-ctrl" ng-click="deactivateUser(user._id)"></span></span>
+                    <span class="badge pull-right"><span class="glyphicon glyphicon-off sm-ctrl" ng-click="activateDeactivateUser(user._id, !user.active)"></span></span>
                     <span class="badge pull-right"><span class="glyphicon glyphicon-pencil sm-ctrl" ng-click="editUser(user._id)"></span></span>
                 </div>
                 <div>
