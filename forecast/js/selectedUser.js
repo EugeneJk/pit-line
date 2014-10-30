@@ -1,5 +1,5 @@
 angular.module('forecast', ['OnEnterEvent'])
-.controller('UsersController', function($scope, $window, $http) {
+.controller('UserController', function($scope, $window, $http) {
     $scope.apiUrl = 'api.php';
     $scope.init = function(initFunction){
         var initData = eval(initFunction)();
@@ -8,6 +8,7 @@ angular.module('forecast', ['OnEnterEvent'])
         }
     };
     
+    /*
     $scope.activateDeactivateUser = function(id, active){
         var data = {
             action: 'activate_deactivate_user',
@@ -17,10 +18,6 @@ angular.module('forecast', ['OnEnterEvent'])
             },
         };
         $http.post($scope.apiUrl, data).success(successSave).error(errorSave);        
-    };
-    
-    $scope.editUser = function(id){
-        console.log(id);
     };
     
     var successSave = function(data, status, headers, config){
@@ -36,5 +33,6 @@ angular.module('forecast', ['OnEnterEvent'])
     var errorSave = function(data, status, headers, config){
         console.log(data);
     };
+    */
     
 });

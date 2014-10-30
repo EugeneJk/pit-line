@@ -59,7 +59,22 @@ class Users extends MongoModel
     }
     
     public function getUser($id){
-        $filter = array('_id' => new \MongoId($id));
-        return $this->collection->find($filter);
+        if($id !== 'new'){
+            $filter = array('_id' => new \MongoId($id));
+            $result = $this->collection->findOne($filter);
+            $result['_id'] = $result['_id']->__toString();
+            $result['password'] = '';
+            $result['active'] = $result['active'] ? 'yes' : 'no';
+        } else {
+            $result = array(
+                'username' => '',
+                'password' => '',
+                'role' => 'user',
+                'firstname' => '',
+                'lastname' => '',
+                'active' => 'yes',
+            );
+        }
+        return $result;
     }
 }

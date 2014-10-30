@@ -15,3 +15,7 @@
 .score-input{
     max-width: 50px;
 }
+
+.button-panel{
+    text-align: right; 
+}

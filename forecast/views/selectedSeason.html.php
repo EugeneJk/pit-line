@@ -6,6 +6,11 @@ use forecast\Seasons;
 
 $season = new Seasons;
 $reference = new Reference();
+
+$seasonsData = $season->getSeason($selectedSeason);
+$stagesData = $reference->getStagesList();
+$driversData = $reference->getDriversList();
+$teamsData = $reference->getTeamsList();
 ?>
 
 <!DOCTYPE html>
@@ -207,9 +212,12 @@ $reference = new Reference();
                     </div>
                 </li>
                 <li class="list-group-item">
-                    <button type="button" class="btn btn-primary" ng-click="saveSeason();">
-                        Сохранить <span class="glyphicon glyphicon-floppy-disk"></span>
-                    </button>
+                    <div class="button-panel">
+                        <a href="index.php?action=seasons" class="btn btn-default">Отмена</a>
+                        <button type="button" class="btn btn-primary" ng-click="saveSeason();">
+                            Сохранить <span class="glyphicon glyphicon-floppy-disk"></span>
+                        </button>
+                    </div>
                 </li>
             </ul>        
             <div class="panel-footer tool-bar">
@@ -219,10 +227,10 @@ $reference = new Reference();
         <script type="text/javascript">
             function inputData(){
                 return {
-                    season: <?php echo json_encode($season->getSeason($selectedSeason)); ?>,
-                    stages: <?php echo json_encode($reference->getStagesList());?>,
-                    drivers: <?php echo json_encode($reference->getDriversList());?>,
-                    teams: <?php echo json_encode($reference->getTeamsList());?>,
+                    season: <?php echo json_encode($seasonsData); ?>,
+                    stages: <?php echo json_encode($stagesData);?>,
+                    drivers: <?php echo json_encode($driversData);?>,
+                    teams: <?php echo json_encode($teamsData);?>,
                 };
             };
         </script>
