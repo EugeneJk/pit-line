@@ -20,7 +20,9 @@
             
         case 'save_season':
             $season = new Seasons();
-            $season->setSeason($data);
+            $opRes = $season->setSeason($data);
+            $result['success'] = $opRes === true;
+            $result['error'] = $result['success'] ? '' : 'unexpected_error';
             break;
 
         case 'add_reference_item':

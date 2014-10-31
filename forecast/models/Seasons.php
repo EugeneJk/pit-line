@@ -72,5 +72,6 @@ class Seasons extends MongoModel
         }else{
             $this->collection->update($findQuery,$data);
         }
+        return true;
     }
 }

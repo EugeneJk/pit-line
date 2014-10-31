@@ -1,5 +1,5 @@
 angular.module('forecast', ['OnEnterEvent'])
-.controller('SeasonController', function($scope, $http) {
+.controller('SeasonController', function($scope, $http, $window) {
     $scope.apiUrl = 'api.php';
     $scope.selectedTeam = 0;
     $scope.availableDrivers = null;
@@ -58,9 +58,10 @@ angular.module('forecast', ['OnEnterEvent'])
         $http.post($scope.apiUrl, data).success(successSave).error(errorSave);        
     };
     var successSave = function(data, status, headers, config){
+        if(data.success){
+            $window.location = 'index.php?action=seasons';
+        }
         console.log(data);
-        // this callback will be called asynchronously
-        // when the response is available
     };
     var errorSave = function(data, status, headers, config){
         console.log(data);
