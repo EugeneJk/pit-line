@@ -15,6 +15,13 @@
             $action = 'login';
         }
     }
+    $user = $session->getUser();
+    if(isset($user['role']) && $user['role'] === 'user' && in_array($action, array(
+        'seasons','selected_season','reference','users','selected_user',
+        'save_season','add_reference_item','activate_deactivate_user','save_user',
+    ))){
+        $action = null;
+    }
     
     $models = array('Mongo', 'MongoModel', 'Users', 'Seasons', 'Reference');
     foreach($models as $model){

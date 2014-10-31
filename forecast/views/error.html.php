@@ -38,7 +38,7 @@ include_once 'check.php';
                     <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
                     <li class="active">Ошибка</li>
                 </ol>
-                <h1>Произошла ошибка. Вернитьсь в панель управления и повторите ввод еще раз</h1>
+                <h3>У вас нет прав для просмотра выранной страницы или произошла ошибка.<br> Вернитьсь в панель управления и повторите ввод еще раз</h3>
             </div>
             <div class="panel-footer tool-bar">
                 <a href="index.php?action=logout">Выход</a>
