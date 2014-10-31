@@ -176,7 +176,7 @@ $teamsData = $reference->getTeamsList();
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Позиция</th>
+                                                <th title="Позиция на старте гонки">С.П.</th>
                                                 <th ng-repeat="offset in qualOffsetArray">
                                                     {{offset}}
                                                 </th>
@@ -204,7 +204,7 @@ $teamsData = $reference->getTeamsList();
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Позиция</th>
+                                                <th title="Позиция на финише гонки">Ф.П.</th>
                                                 <th ng-repeat="offset in raceOffsetArray">
                                                     {{offset}}
                                                 </th>
