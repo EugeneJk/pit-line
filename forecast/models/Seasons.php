@@ -6,6 +6,21 @@ class Seasons extends MongoModel
 {
     protected $collection_name = 'seasons';
 
+    public function getActiveSeasons(){
+        $fields = array(
+            '_id' => true,
+        );
+        $result = array();
+        $cursor = $this->collection->find(array('active' => true))->fields($fields);
+        $currentElement = $cursor->getNext();
+        while($currentElement){
+            $result[] = $currentElement['_id'];
+            $currentElement = $cursor->getNext();
+        }
+        
+        return $result;
+    }
+    
     public function getSeasonsList()
     {
         $fields = array(
@@ -16,7 +31,6 @@ class Seasons extends MongoModel
         $cursor = $this->collection->find()->fields($fields)->sort(array('_id' => 1));
         $currentElement = $cursor->getNext();
         while($currentElement){
-            $currentElement['active'] = $currentElement['active'] == true ? 'yes' : 'no';
             $result[] = $currentElement;
             $currentElement = $cursor->getNext();
         }
@@ -29,7 +43,7 @@ class Seasons extends MongoModel
         if($id === 'new'){
             return array(
                 '_id' => '',
-                'active' => 'yes',
+                'active' => 'no',
                 'stages' => array(
                 ),
                 'teams' => array(

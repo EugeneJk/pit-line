@@ -34,6 +34,20 @@ angular.module('forecast', ['OnEnterEvent'])
             case 'stage': removeStage(key); break;
         }
     };
+    $scope.move = function(isUpDirection, type, number){
+        var scope = null;
+        switch(type){
+            case 'stage': scope = $scope.season.stages; break;
+        }
+        if(scope !== null){
+            var removed = scope.splice(number,1);
+            if(isUpDirection){
+                scope.splice(number - 1, 0, removed[0]);
+            } else {
+                scope.splice(number + 1, 0, removed[0]);
+            }
+        }
+    };
 
 
     $scope.saveSeason = function(){

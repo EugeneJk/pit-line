@@ -47,7 +47,7 @@ $seasonsData = $forecast->getActiveSeasons();
                 </ol>
                 
                 <span ng-repeat="season in seasons">
-                    <h3>{{season.name}}</h3>
+                    <h3>{{season._id}}</h3>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="column-header">Прошедшие Этапы:</div>

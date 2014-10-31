@@ -87,10 +87,10 @@ $teamsData = $reference->getTeamsList();
                                     <div class="label-item" ng-repeat="(key,value) in season.stages">
                                         {{value}}
                                         <div class="pull-right">
-                                            <button class="btn btn-xs btn-default" ng-click="moveUp('stage',key)">
+                                            <button class="btn btn-xs btn-default" ng-class="{'disabled' : key == 0}" ng-click="move(true, 'stage',key)">
                                                 <span class="glyphicon glyphicon-arrow-up"></span>
                                             </button>
-                                            <button class="btn btn-xs btn-default" ng-click="moveDown('stage',key)">
+                                            <button class="btn btn-xs btn-default" ng-class="{'disabled' : key == (season.stages.length -1)}" ng-click="move(false, 'stage',key)">
                                                 <span class="glyphicon glyphicon-arrow-down"></span>
                                             </button>
                                             <button class="btn btn-xs btn-primary" ng-click="remove('stage',key)">

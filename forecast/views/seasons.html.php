@@ -29,6 +29,7 @@ $seasons = new Seasons();
         <![endif]-->
 
         <link href="/forecast/css/base.css" rel="stylesheet">
+        <link href="/forecast/css/seasons.css" rel="stylesheet">
         <script src="/forecast/js/seasons.js"></script>
         <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
@@ -42,27 +43,34 @@ $seasons = new Seasons();
                     <li><a href="index.php?action=options">Панель управления системы "Прогноз"</a></li>
                     <li class="active">Сезоны</li>
                 </ol>
-                <span ng-repeat="season in seasons">
-                    <button  type="button" class="btn btn-default"
-                             ng-class="{'btn-success': season.active}" ng-click="openSeason(season._id);">
-                        {{season._id}}
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                </span>
-                <button type="button" class="btn btn-primary" ng-click="openSeason('new');">
-                    Новый <span class="glyphicon glyphicon-plus"></span>
-                </button>
+                <div class="label-item-season" ng-repeat="season in seasons"
+                    ng-class="{'bg-success': season.active}">
+                    {{season._id}}
+                    <div class="pull-right">
+                        <button class="btn btn-xs btn-success" ng-click="openSeason(season._id);">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="label-item-season bg-info">
+                    Новый
+                    <div class="pull-right">
+                        <button class="btn btn-xs btn-success" ng-click="openSeason('new');">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="panel-footer tool-bar">
                 <a href="index.php?action=logout">Выход</a>
             </div>
         </div>
         <script type="text/javascript">
-                    function inputData() {
-                        return {
-                            seasons: <?php echo json_encode($seasons->getSeasonsList()); ?>,
-                        };
-                    };
+            function inputData() {
+                return {
+                    seasons: <?php echo json_encode($seasons->getSeasonsList()); ?>,
+                };
+            };
         </script>
     </body>
 </html>
