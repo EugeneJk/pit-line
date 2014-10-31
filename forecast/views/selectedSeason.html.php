@@ -54,7 +54,20 @@ $teamsData = $reference->getTeamsList();
                 </ol>                
 
                 <div class="tab-pane active option-tab" id="year">
-                    <input type="text" class="form-control" placeholder="Год" ng-model="season._id">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" placeholder="Год" ng-model="season._id">
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Активный</span>
+                                <select class="form-control" ng-model="season.active">
+                                    <option value="yes">Да</option>
+                                    <option value="no">Нет</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <ul class="list-group">

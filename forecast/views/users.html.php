@@ -45,8 +45,14 @@ $user = new Users();
                 <div class="label-item-third" ng-class="{'bg-success': user.active === true, 'bg-warning text-muted': user.active !== true}" ng-repeat="user in users">
                     <div>{{user.firstname}} {{user.lastname}} <span class="glyphicon glyphicon-wrench" ng-show="user.role == 'admin'"></span></div>
                     <div><b>{{user.username}}</b>
-                    <span class="badge pull-right"><span class="glyphicon glyphicon-off sm-ctrl" ng-click="activateDeactivateUser(user._id, !user.active)"></span></span>
-                    <span class="badge pull-right"><span class="glyphicon glyphicon-edit sm-ctrl" ng-click="editUser(user._id)"></span></span>
+                        <div class="pull-right">
+                            <button class="btn btn-xs btn-warning" ng-click="activateDeactivateUser(user._id, !user.active)">
+                                <span class="glyphicon glyphicon-off"></span>
+                            </button>
+                            <button class="btn btn-xs btn-success" ng-click="editUser(user._id)">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div>

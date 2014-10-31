@@ -16,6 +16,7 @@ class Seasons extends MongoModel
         $cursor = $this->collection->find()->fields($fields)->sort(array('_id' => 1));
         $currentElement = $cursor->getNext();
         while($currentElement){
+            $currentElement['active'] = $currentElement['active'] == true ? 'yes' : 'no';
             $result[] = $currentElement;
             $currentElement = $cursor->getNext();
         }
@@ -28,7 +29,7 @@ class Seasons extends MongoModel
         if($id === 'new'){
             return array(
                 '_id' => '',
-                'active' => true,
+                'active' => 'yes',
                 'stages' => array(
                 ),
                 'teams' => array(
@@ -41,13 +42,16 @@ class Seasons extends MongoModel
                 ),
             );
         } else {
-            return $this->collection->findOne(array('_id' => $id));
+            $result = $this->collection->findOne(array('_id' => $id));
+            $result['active'] = $result['active'] === true ? 'yes' : 'no';
+            return $result;
         }
     }
     
     public function setSeason($data)
     {
         $findQuery = array('_id' => $data['_id']);
+        $data['active'] = $data['_id'] === 'yes';
         $isNew = $this->collection->find($findQuery)->count() == 0;
         if($isNew){
             $this->collection->insert($data);

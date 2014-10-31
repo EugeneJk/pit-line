@@ -46,7 +46,7 @@ $reference = new Reference();
                 </ol>                
                 <div class="tab-pane option-tab" id="teams">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <div class="column-header">Этапы:</div>
                             <div class="label-item" ng-repeat="stage in stages">
                                 {{stage}}
@@ -54,7 +54,7 @@ $reference = new Reference();
                             <div class="input-group">
                                 <input type="text" class="form-control" ng-model="newStage">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" ng-click="addNewStage(newStage)">Добавить</button>
+                                    <button class="btn btn-default" type="button" ng-click="addNewStage(newStage)"><span class="glyphicon glyphicon-plus"></span></button>
                                 </span>
                             </div>
                         </div>
@@ -66,11 +66,11 @@ $reference = new Reference();
                             <div class="input-group">
                                 <input type="text" class="form-control" ng-model="newDriver">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" ng-click="addNewDriver(newDriver)">Добавить</button>
+                                    <button class="btn btn-default" type="button" ng-click="addNewDriver(newDriver)"><span class="glyphicon glyphicon-plus"></span></button>
                                 </span>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="column-header">Команды:</div>
                             <div class="label-item" ng-repeat="team in teams">
                                 {{team}}
@@ -78,7 +78,7 @@ $reference = new Reference();
                             <div class="input-group">
                                 <input type="text" class="form-control" ng-model="newTeam">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" ng-click="addNewTeam(newTeam)">Добавить</button>
+                                    <button class="btn btn-default" type="button" ng-click="addNewTeam(newTeam)"><span class="glyphicon glyphicon-plus"></span></button>
                                 </span>
                             </div>
                         </div>
