@@ -29,7 +29,6 @@ $seasons = new Seasons();
         <![endif]-->
 
         <link href="/forecast/css/base.css" rel="stylesheet">
-        <link href="/forecast/css/seasons.css" rel="stylesheet">
         <script src="/forecast/js/seasons.js"></script>
         <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>

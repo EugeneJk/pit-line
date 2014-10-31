@@ -30,6 +30,7 @@ $seasonsData = $forecast->getActiveSeasons();
         <![endif]-->
 
         <link href="/forecast/css/base.css" rel="stylesheet">
+        <link href="/forecast/css/options.css" rel="stylesheet">
         <script src="/forecast/js/options.js"></script>
         <script src="/forecast/js/OnEnterEvent.js"></script>
     </head>
@@ -50,11 +51,22 @@ $seasonsData = $forecast->getActiveSeasons();
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="column-header">Прошедшие Этапы:</div>
-                            
+                            <div class="btn-group-vertical" style="width: 100%">
+                                <button type="button" class="btn btn-default stage-btn" ng-repeat="stage in season.stages.finished" ng-click="viewEditStage(season.name, stage)">
+                                    {{stage}} <span class="glyphicon glyphicon-eye-open pull-right"></span>
+                                </button>
+                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="column-header">Ожидающие Этапы:</div>
-                            
+                            <div class="btn-group-vertical" style="width: 100%">
+                                <button type="button" class="btn btn-success stage-btn" ng-click="viewEditStage(season.name, season.stages.current)">
+                                    {{season.stages.current}} <span class="glyphicon glyphicon-edit pull-right">
+                                </button>
+                                <button type="button" class="btn btn-default stage-btn" ng-repeat="stage in season.stages.expected"  ng-click="viewEditStage(season.name, stage)">
+                                    {{stage}} <span class="glyphicon glyphicon-pencil pull-right">
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <hr>

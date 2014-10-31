@@ -7,4 +7,8 @@ angular.module('forecast', ['OnEnterEvent'])
             $scope[index] = initData[index];
         }
     };
+    
+    $scope.viewEditStage = function(season,stage){
+        console.log(season,stage);
+    };
 });
