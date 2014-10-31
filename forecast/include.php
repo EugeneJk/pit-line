@@ -16,6 +16,7 @@
         }
     }
     $user = $session->getUser();
+    $isAdmin = $user['role'] === 'admin';
     if(isset($user['role']) && $user['role'] === 'user' && in_array($action, array(
         'seasons','selected_season','reference','users','selected_user',
         'save_season','add_reference_item','activate_deactivate_user','save_user',
@@ -23,7 +24,7 @@
         $action = null;
     }
     
-    $models = array('Mongo', 'MongoModel', 'Users', 'Seasons', 'Reference');
+    $models = array('Mongo', 'MongoModel', 'Users', 'Seasons', 'Reference' , 'Forecast');
     foreach($models as $model){
         include_once 'models/' . $model . '.php';
     }
