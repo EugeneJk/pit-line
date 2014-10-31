@@ -71,20 +71,28 @@ $teamsData = $reference->getTeamsList();
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="column-header">Этапы:</div>
-                                    <div class="btn-group-vertical" style="width: 100%">
-                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in season.stages"
-                                            ng-click="removeStage(key)">
-                                        {{value}} <span class="glyphicon glyphicon-arrow-right pull-right"></span>
-                                    </button>
+                                    <div class="label-item" ng-repeat="(key,value) in season.stages">
+                                        {{value}}
+                                        <div class="pull-right">
+                                            <button class="btn btn-xs btn-default" ng-click="moveUp('stage',key)">
+                                                <span class="glyphicon glyphicon-arrow-up"></span>
+                                            </button>
+                                            <button class="btn btn-xs btn-default" ng-click="moveDown('stage',key)">
+                                                <span class="glyphicon glyphicon-arrow-down"></span>
+                                            </button>
+                                            <button class="btn btn-xs btn-primary" ng-click="remove('stage',key)">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="column-header">Доступные этапы:</div>
-                                    <div class="btn-group-vertical" style="width: 100%">
-                                    <button type="button" class="btn btn-default drivers-avaiable" ng-repeat="(key,value) in availableStages"
-                                            ng-click="addNewStage(key)">
-                                        <span class="glyphicon glyphicon-arrow-left"></span> {{value}} 
-                                    </button>
+                                    <div class="label-item" ng-repeat="(key,value) in availableStages">
+                                        <button class="btn btn-xs btn-success" ng-click="addNewStage(key)">
+                                            <span class="glyphicon glyphicon-arrow-left"></span>
+                                        </button>
+                                        {{value}}
                                     </div>
                                 </div>
                             </div>

@@ -29,6 +29,13 @@ angular.module('forecast', ['OnEnterEvent'])
         refreshQualOffsetArray();
     };
 
+    $scope.remove = function(type, key){
+        switch(type){
+            case 'stage': removeStage(key); break;
+        }
+    };
+
+
     $scope.saveSeason = function(){
         var data = {
             action: 'save_season',
@@ -49,7 +56,7 @@ angular.module('forecast', ['OnEnterEvent'])
         $scope.season.stages.push($scope.availableStages[number]);
         refreshAvailableStages();
     };
-    $scope.removeStage = function(number){
+    var removeStage = function(number){
         $scope.season.stages.splice(number,1);
         refreshAvailableStages();
     };
