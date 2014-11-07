@@ -7,11 +7,33 @@ class Forecast extends MongoModel
     
     public function getActiveSeasons(){
         $seasons = new Seasons();
+        $activeSeasons = $seasons->getActiveSeasons();
         $filter = array(
             '_id' => array('$in' => $seasons->getActiveSeasons()),
         );
 
-        $result = $this->collection->find($filter)->fields(array('_id' => true, 'stages' => true));
+        $activeForecastsCount = $this->count($filter);
+        
+        if(count($activeSeasons) !== $activeForecastsCount){
+            foreach($activeSeasons as $item){
+                $currentFilter = array('_id' => $item);
+                $isExists = $this->collection->find($currentFilter)->count() === 1;
+                if(!$isExists){
+                    $seasonData = $seasons->findOne($currentFilter);
+                    $itemToInsert = array(
+                        '_id' => $item,
+                        'stages' => array(),
+                    );
+                    //foreach($seasonData[] as $)
+                    //$this->
+                    //var_dump();
+                }
+            }
+        }
+        
+        $activeForecasts = $this->find($filter,array('_id' => true, 'stages' => true));
+        
+        //var_dump($activeSeasons,$activeForecasts);
         
         return array(
             array(

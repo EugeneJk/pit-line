@@ -84,19 +84,20 @@ $teamsData = $reference->getTeamsList();
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="column-header">Этапы:</div>
-                                    <div class="label-item" ng-repeat="(key,value) in season.stages">
-                                        {{value}}
-                                        <div class="pull-right">
-                                            <button class="btn btn-xs btn-default" ng-class="{'disabled' : key == 0}" ng-click="move(true, 'stage',key)">
+                                    <div class="input-group input-group-sm" ng-repeat="(key,value) in season.stages">
+                                        <span class="input-group-addon season-label">{{value}}</span>
+                                        <input type="text" class="form-control" placeholder="Дата">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" ng-class="{'disabled' : key == 0}" ng-click="move(true, 'stage',key)">
                                                 <span class="glyphicon glyphicon-arrow-up"></span>
                                             </button>
-                                            <button class="btn btn-xs btn-default" ng-class="{'disabled' : key == (season.stages.length -1)}" ng-click="move(false, 'stage',key)">
+                                            <button class="btn btn-default" ng-class="{'disabled' : key == (season.stages.length -1)}" ng-click="move(false, 'stage',key)">
                                                 <span class="glyphicon glyphicon-arrow-down"></span>
                                             </button>
-                                            <button class="btn btn-xs btn-primary" ng-click="remove('stage',key)">
+                                            <button class="btn btn-primary" ng-click="remove('stage',key)">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </button>
-                                        </div>
+                                        </span>                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
