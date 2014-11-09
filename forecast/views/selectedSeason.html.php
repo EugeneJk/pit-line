@@ -85,8 +85,8 @@ $teamsData = $reference->getTeamsList();
                                 <div class="col-sm-6">
                                     <div class="column-header">Этапы:</div>
                                     <div class="input-group input-group-sm" ng-repeat="(key,value) in season.stages">
-                                        <span class="input-group-addon season-label">{{value}}</span>
-                                        <input type="text" class="form-control" placeholder="Дата">
+                                        <span class="input-group-addon season-label">{{value.name}}</span>
+                                        <input type="text" class="form-control" ng-model="season.stages[key].qdate" placeholder="Дата/время квалификации">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" ng-class="{'disabled' : key == 0}" ng-click="move(true, 'stage',key)">
                                                 <span class="glyphicon glyphicon-arrow-up"></span>

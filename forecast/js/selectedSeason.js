@@ -68,7 +68,11 @@ angular.module('forecast', ['OnEnterEvent'])
     };
     
     $scope.addNewStage = function(number){
-        $scope.season.stages.push($scope.availableStages[number]);
+        var item = {
+            name: $scope.availableStages[number],
+            qdate: ''
+        };
+        $scope.season.stages.push(item);
         refreshAvailableStages();
     };
     var removeStage = function(number){
@@ -78,7 +82,7 @@ angular.module('forecast', ['OnEnterEvent'])
     var refreshAvailableStages = function(){
         $scope.availableStages = angular.copy($scope.stages);
         for(var i in $scope.season.stages){
-            var pos = $scope.availableStages.indexOf($scope.season.stages[i]);
+            var pos = $scope.availableStages.indexOf($scope.season.stages[i].name);
             if(pos !== -1){
                 $scope.availableStages.splice(pos,1);
             }
